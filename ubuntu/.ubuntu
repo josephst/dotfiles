@@ -52,7 +52,7 @@ sudo chsh -s /bin/zsh
 echo "installing node (via Nodesource)"
 # WSL doesn't support snaps
 sudo apt-get install -y build-essential
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 # echo "installing a few global npm packages"
@@ -76,7 +76,7 @@ eval "$(ssh-agent -s)"
 echo "run 'pbcopy < ~/.ssh/id_rsa.pub' and paste that into GitHub"
 
 echo "get Prezto set up for zsh"
-zsh -c "git clone --recursive https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
+git clone --recursive https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\"
 zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
 echo \"linking \$rcfile to \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"\";
 ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
@@ -84,7 +84,7 @@ done"
 
 
 echo "cloning dotfiles"
-git clone git@github.com:josephst/dotfiles.git "${HOME}/dotfiles"
+git clone https://github.com/josephst/dotfiles.git "${HOME}/dotfiles"
 # ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
 # ln -s "${HOME}/dotfiles/.gitignore_global" "${HOME}/.gitignore_global"
 ln -s "${HOME}/dotfiles/ubuntu/.gitconfig" "${HOME}/.gitconfig"
