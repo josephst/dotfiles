@@ -50,8 +50,10 @@ sudo chsh -s /bin/zsh
 # echo "npm --version: $(npm --version)"
 
 echo "installing node (via Nodesource)"
-sudo snap install node --classic --channel=12
+# WSL doesn't support snaps
 sudo apt-get install -y build-essential
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
 # echo "installing a few global npm packages"
 # npm install --global serve fkill-cli npm-quick-run \
