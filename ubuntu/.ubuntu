@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# modified from ~/.macos — https://mths.be/macos and Kent C. Dodds' script
+# modified from ~/.macos — https://mths.be/macos and Kent C. Dodds' script (https://github.com/kentcdodds/dotfiles/blob/master/.macos)
+# Run without downloading:
+# curl https://raw.githubusercontent.com/josephst/dotfiles/master/ubuntu/.ubuntu | bash
 
 
 # Ask for the administrator password upfront
