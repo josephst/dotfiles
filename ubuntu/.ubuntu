@@ -48,8 +48,8 @@ sudo chsh -s /bin/zsh
 # echo "npm --version: $(npm --version)"
 
 echo "installing node (via Nodesource)"
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs
+sudo snap install node --classic --channel=12
+sudo apt-get install -y build-essential
 
 # echo "installing a few global npm packages"
 # npm install --global serve fkill-cli npm-quick-run \
@@ -66,7 +66,7 @@ sudo apt-get install -y nodejs
 echo "Generating an RSA token for GitHub"
 mkdir -p ~/.ssh
 touch ~/.ssh/config
-ssh-keygen -t rsa -b 4096 -C "hello@josephstahl.com"
+ssh-keygen -t rsa -b 4096 -C "hello@josephstahl.com" -f ~/.ssh/id_rsa
 # echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa" | tee ~/.ssh/config
 eval "$(ssh-agent -s)"
 echo "run 'pbcopy < ~/.ssh/id_rsa.pub' and paste that into GitHub"
