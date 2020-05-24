@@ -25,7 +25,7 @@ sudo apt update
 
 echo "installing shell"
 sudo apt-get install -y zsh
-sudo chsh -s /bin/zsh
+chsh -s /bin/zsh
 
 # echo "installing homebrew"
 # # install homebrew https://brew.sh
@@ -73,7 +73,7 @@ touch ~/.ssh/config
 ssh-keygen -t rsa -b 4096 -C "hello@josephstahl.com" -f ~/.ssh/id_rsa
 echo "Host *\n AddKeysToAgent yes\n IdentityFile ~/.ssh/id_rsa" | tee ~/.ssh/config
 eval "$(ssh-agent -s)"
-echo "run 'pbcopy < ~/.ssh/id_rsa.pub' and paste that into GitHub"
+echo "run 'cat ~/.ssh/id_rsa.pub | clip.exe' and paste that into GitHub"
 
 echo "get Prezto set up for zsh"
 zsh -c "git clone --recursive https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
