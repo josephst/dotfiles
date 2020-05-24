@@ -72,6 +72,7 @@ mkdir -p ~/.ssh
 touch ~/.ssh/config
 ssh-keygen -t rsa -b 4096 -C "hello@josephstahl.com" -f ~/.ssh/id_rsa
 echo "Host *\n AddKeysToAgent yes\n IdentityFile ~/.ssh/id_rsa" | tee ~/.ssh/config
+chmod 600 ~/.ssh/config
 eval "$(ssh-agent -s)"
 echo "run 'cat ~/.ssh/id_rsa.pub | clip.exe' and paste that into GitHub"
 
