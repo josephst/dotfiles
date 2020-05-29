@@ -187,7 +187,7 @@ choco install hugo -y
 
 # browsers
 choco install firefox -y
-choco install googlechrome -y
+# choco install googlechrome -y
 
 # apps
 choco install vlc -y
@@ -202,7 +202,7 @@ choco install 7zip.install -y
 choco install sysinternals -y
 
 # windows features
-choco install -y Microsoft-Hyper-V-All -source windowsFeatures
+# choco install -y Microsoft-Hyper-V-All -source windowsFeatures
 choco install -y Microsoft-Windows-Subsystem-Linux -source windowsFeatures
 Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
 
