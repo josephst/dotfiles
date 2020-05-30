@@ -67,14 +67,18 @@ sudo apt-get install -y nodejs
 # qlcolorcode qlmarkdown qlstephen quicklook-json webpquicklook \
 # suspicious-package qlvideo spotify focus dropbox front qmoji slack
 
-echo "Generating an RSA token for GitHub"
-mkdir -p ~/.ssh
-touch ~/.ssh/config
-ssh-keygen -t rsa -b 4096 -C "hello@josephstahl.com" -f ~/.ssh/id_rsa
-echo "Host *\n AddKeysToAgent yes\n IdentityFile ~/.ssh/id_rsa" | tee ~/.ssh/config
-chmod 600 ~/.ssh/config
-eval "$(ssh-agent -s)"
-echo "run 'cat ~/.ssh/id_rsa.pub | clip.exe' and paste that into GitHub"
+if [[! -f ~/.ssh/id_rsa]]; then
+  echo "Generating an RSA token for GitHub"
+  mkdir -p ~/.ssh
+  touch ~/.ssh/config
+  ssh-keygen -t rsa -b 4096 -C "hello@josephstahl.com" -f ~/.ssh/id_rsa
+  echo "Host *\n AddKeysToAgent yes\n IdentityFile ~/.ssh/id_rsa" | tee ~/.ssh/config
+  chmod 600 ~/.ssh/config
+  eval "$(ssh-agent -s)"
+  echo "run 'cat ~/.ssh/id_rsa.pub | clip.exe' and paste that into GitHub"
+ else
+  echo "RSA token already created"
+ fi
 
 echo "get Prezto set up for zsh"
 zsh -c "git clone --recursive git@github.com:josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
