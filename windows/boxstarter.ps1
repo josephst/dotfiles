@@ -34,7 +34,7 @@ $apps = @(
     "Microsoft.BingTranslator"
     # "Microsoft.BingWeather"
     #"Microsoft.FreshPaint"
-    "Microsoft.Microsoft3DViewer"
+    # "Microsoft.Microsoft3DViewer"
     # "Microsoft.MicrosoftOfficeHub"
     "Microsoft.MicrosoftSolitaireCollection"
     "Microsoft.MicrosoftPowerBIForWindows"
