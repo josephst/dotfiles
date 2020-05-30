@@ -67,7 +67,7 @@ sudo apt-get install -y nodejs
 # qlcolorcode qlmarkdown qlstephen quicklook-json webpquicklook \
 # suspicious-package qlvideo spotify focus dropbox front qmoji slack
 
-if [[! -f ~/.ssh/id_rsa]]; then
+if ! test -f ~/.ssh/id_rsa; then
   echo "Generating an RSA token for GitHub"
   mkdir -p ~/.ssh
   touch ~/.ssh/config
@@ -80,22 +80,29 @@ if [[! -f ~/.ssh/id_rsa]]; then
   echo "RSA token already created"
  fi
 
-echo "get Prezto set up for zsh"
-zsh -c "git clone --recursive git@github.com:josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
-zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
-echo \"linking \$rcfile to \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"\";
-ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
-done"
+if ! test -d ~/.zprezto; then
+  echo "get Prezto set up for zsh"
+  zsh -c "git clone --recursive git@github.com:josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
+  zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
+  echo \"linking \$rcfile to \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"\";
+  ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
+  done"
+else
+  echo "prezto already set up"
+fi
 
-
-echo "cloning dotfiles"
-git clone git@github.com:josephst/dotfiles.git "${HOME}/dotfiles"
-# ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
-# ln -s "${HOME}/dotfiles/.gitignore_global" "${HOME}/.gitignore_global"
-ln -s -f "${HOME}/dotfiles/ubuntu/.gitconfig" "${HOME}/.gitconfig"
-# ln -s "${HOME}/dotfiles/.my_bin" "${HOME}/.my_bin"
-# ln -s "${HOME}/dotfiles/.vimrc" "${HOME}/.vimrc"
-# ln -s "${HOME}/dotfiles/.vimrc-parts" "${HOME}/.vimrc-parts"
+if ! test -d ~/dotfiles; then
+  echo "cloning dotfiles"
+  git clone git@github.com:josephst/dotfiles.git "${HOME}/dotfiles"
+  # ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
+  # ln -s "${HOME}/dotfiles/.gitignore_global" "${HOME}/.gitignore_global"
+  ln -s "${HOME}/dotfiles/ubuntu/.gitconfig" "${HOME}/.gitconfig"
+  # ln -s "${HOME}/dotfiles/.my_bin" "${HOME}/.my_bin"
+  # ln -s "${HOME}/dotfiles/.vimrc" "${HOME}/.vimrc"
+  # ln -s "${HOME}/dotfiles/.vimrc-parts" "${HOME}/.vimrc-parts"
+else
+  echo "dotfiles already set up"
+fi
 
 # get bat and delta all configured
 # mkdir -p "${HOME}/.config/bat/themes"
