@@ -25,7 +25,7 @@ sudo apt update
 
 echo "installing shell"
 sudo apt-get install -y zsh
-chsh -s /bin/zsh
+# chsh -s /bin/zsh # doesn't seem to work in script
 
 # echo "installing homebrew"
 # # install homebrew https://brew.sh
