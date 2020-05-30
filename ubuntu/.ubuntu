@@ -82,24 +82,27 @@ if ! test -f ~/.ssh/id_rsa; then
 
 if ! test -d ~/.zprezto; then
   echo "get Prezto set up for zsh"
-  zsh -c "git clone --recursive git@github.com:josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
+  zsh -c "git clone --recursive https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
   zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
   echo \"linking \$rcfile to \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"\";
   ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
   done"
+  # switch to ssh instead of https after cloning (can't clone with ssh initially since ssh key not yet added to github"
+  git remote set-url origin git@github.com:josephst/prezto.git
 else
   echo "prezto already set up"
 fi
 
 if ! test -d ~/dotfiles; then
   echo "cloning dotfiles"
-  git clone git@github.com:josephst/dotfiles.git "${HOME}/dotfiles"
+  git clone https://github.com/josephst/dotfiles.git "${HOME}/dotfiles"
   # ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
   # ln -s "${HOME}/dotfiles/.gitignore_global" "${HOME}/.gitignore_global"
   ln -s "${HOME}/dotfiles/ubuntu/.gitconfig" "${HOME}/.gitconfig"
   # ln -s "${HOME}/dotfiles/.my_bin" "${HOME}/.my_bin"
   # ln -s "${HOME}/dotfiles/.vimrc" "${HOME}/.vimrc"
   # ln -s "${HOME}/dotfiles/.vimrc-parts" "${HOME}/.vimrc-parts"
+  git remote set-url origin git@github.com:josephst/dotfiles.git
 else
   echo "dotfiles already set up"
 fi
