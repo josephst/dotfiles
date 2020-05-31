@@ -218,8 +218,12 @@ Set-WindowsExplorerOptions -EnableShowFileExtensions
 # Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneShowAllFolders -Value 1
 
 # dotfiles
-git clone https://github.com/josephst/dotfiles.git $HOME\dotfiles
-New-Item -ItemType SymbolicLink -Target "$HOME\dotfiles\windows\.gitconfig" -Path "$HOME\.gitconfig" -Force
+if (-not (Test-Path -Path $HOME\dotfiles)) {
+    git clone https://github.com/josephst/dotfiles.git $HOME\dotfiles
+    New-Item -ItemType SymbolicLink -Target "$HOME\dotfiles\windows\.gitconfig" -Path "$HOME\.gitconfig" -Force
+} else {
+    Write-Host "dotfiles already exists"
+}
 
 
 # Restore Temporary Settings
