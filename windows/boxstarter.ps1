@@ -1,8 +1,8 @@
 # Description: Boxstarter Script
 # Author: Joseph Stahl
-# Last Updated: 2019-06-04
+# Last Updated: 2020-05-31
 #
-# URL: https://raw.githubusercontent.com/josephst/win10-boxstarter/master/boxstarter.ps1
+# URL: https://raw.githubusercontent.com/josephst/dotfiles/master/windows/boxstarter.ps1
 # 
 # Based on Jess Fraz (https://gist.github.com/jessfraz/7c319b046daa101a4aaef937a20ff41f)
 # Microsoft (https://github.com/microsoft/windows-dev-box-setup-scripts)
@@ -16,7 +16,7 @@
 # Run this boxstarter by calling the following from an **elevated** command-prompt:
 # 	start http://boxstarter.org/package/nr/url?<URL-TO-RAW-GIST>
 # OR
-# 	Install-BoxstarterPackage -PackageName <URL-TO-RAW-GIST> -DisableReboots
+# 	Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/josephst/dotfiles/master/windows/boxstarter.ps1 -DisableReboots
 #
 # Learn more: http://boxstarter.org/Learn/WebLauncher
 
@@ -220,6 +220,15 @@ Set-WindowsExplorerOptions -EnableShowFileExtensions
 # Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneExpandToCurrentFolder -Value 1
 #adds things back in your left pane like recycle bin
 # Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneShowAllFolders -Value 1
+
+# dotfiles
+if (-not (Test-Path -Path $HOME\dotfiles)) {
+    git clone https://github.com/josephst/dotfiles.git $HOME\dotfiles
+    New-Item -ItemType SymbolicLink -Target "$HOME\dotfiles\windows\.gitconfig" -Path "$HOME\.gitconfig" -Force
+} else {
+    Write-Host "dotfiles already exists"
+}
+
 
 # Restore Temporary Settings
 Enable-UAC
