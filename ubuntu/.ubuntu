@@ -88,7 +88,9 @@ if ! test -d ~/.zprezto; then
   ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
   done"
   # switch to ssh instead of https after cloning (can't clone with ssh initially since ssh key not yet added to github"
+  pushd "${HOME}/.zprezto"
   git remote set-url origin git@github.com:josephst/prezto.git
+  popd
 else
   echo "prezto already set up"
 fi
@@ -102,7 +104,9 @@ if ! test -d ~/dotfiles; then
   # ln -s "${HOME}/dotfiles/.my_bin" "${HOME}/.my_bin"
   # ln -s "${HOME}/dotfiles/.vimrc" "${HOME}/.vimrc"
   # ln -s "${HOME}/dotfiles/.vimrc-parts" "${HOME}/.vimrc-parts"
+  pushd "${HOME}/dotfiles"
   git remote set-url origin git@github.com:josephst/dotfiles.git
+  popd
 else
   echo "dotfiles already set up"
 fi
