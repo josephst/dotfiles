@@ -25,7 +25,7 @@ sudo apt update
 
 echo "installing shell"
 sudo apt-get install -y zsh
-# chsh -s /bin/zsh # doesn't seem to work in script
+# chsh -s $(which zsh) # doesn't seem to work in script
 
 # echo "installing homebrew"
 # # install homebrew https://brew.sh
@@ -58,6 +58,9 @@ sudo apt-get install -y nodejs
 # echo "installing a few global npm packages"
 # npm install --global serve fkill-cli npm-quick-run \
 # semantic-release-cli npm-check-updates
+
+echo "installing other common apps"
+sudo apt-get install -y httpie bat
 
 # echo "installing apps with brew cask"
 # brew cask install alfred google-chrome firefox brave-browser bettertouchtool divvy \
