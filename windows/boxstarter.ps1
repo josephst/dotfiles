@@ -198,6 +198,7 @@ choco install adobereader -y
 # utils
 choco install youtube-dl -y
 choco install ffmpeg -y
+choco install imagemagick -y
 choco install 7zip.install -y
 choco install sysinternals -y
 
