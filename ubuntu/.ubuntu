@@ -52,7 +52,7 @@ sudo apt-get install -y zsh
 echo "installing node (via Nodesource)"
 # WSL doesn't support snaps
 sudo apt-get install -y build-essential
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 # echo "installing a few global npm packages"
@@ -104,6 +104,7 @@ if ! test -d ~/dotfiles; then
   # ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
   # ln -s "${HOME}/dotfiles/.gitignore_global" "${HOME}/.gitignore_global"
   ln -s "${HOME}/dotfiles/ubuntu/.gitconfig" "${HOME}/.gitconfig"
+  ln -s "${HOME}/dotfiles/ubuntu/.gemrc" "${HOME}/.gemrc"
   # ln -s "${HOME}/dotfiles/.my_bin" "${HOME}/.my_bin"
   # ln -s "${HOME}/dotfiles/.vimrc" "${HOME}/.vimrc"
   # ln -s "${HOME}/dotfiles/.vimrc-parts" "${HOME}/.vimrc-parts"
