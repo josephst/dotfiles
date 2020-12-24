@@ -46,18 +46,29 @@ sudo apt-get install -y zsh
 # echo "installing node (via n-install)"
 # curl -L https://git.io/n-install | bash
 
-# echo "node --version: $(node --version)"
-# echo "npm --version: $(npm --version)"
+echo "install development libraries and tools"
+sudo apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev \
+libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev \
+postgresql libpq-dev
 
 echo "installing node (via Nodesource)"
-# WSL doesn't support snaps
-sudo apt-get install -y build-essential
 curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-# echo "installing a few global npm packages"
-# npm install --global serve fkill-cli npm-quick-run \
-# semantic-release-cli npm-check-updates
+echo "node --version: $(node --version)"
+echo "npm --version: $(npm --version)"
+
+echo "installing a few global npm packages"
+npm install --global serve
+# npm install --global fkill-cli npm-quick-run semantic-release-cli npm-check-updates
+
+echo "installing rb-env to manage ruby"
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+# update available ruby versions
+pushd "${HOME}/.rbenv/plugins/ruby-build"
+git pull
+popd
+
 
 echo "installing other common apps"
 sudo apt-get install -y httpie bat
@@ -93,6 +104,7 @@ if ! test -d ~/.zprezto; then
   # switch to ssh instead of https after cloning (can't clone with ssh initially since ssh key not yet added to github"
   pushd "${HOME}/.zprezto"
   git remote set-url origin git@github.com:josephst/prezto.git
+  git remote add upstream https://github.com/sorin-ionescu/prezto.git
   popd
 else
   echo "prezto already set up"
