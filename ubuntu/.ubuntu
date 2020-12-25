@@ -94,7 +94,7 @@ if ! test -f ~/.ssh/id_rsa; then
   echo "RSA token already created"
  fi
 
-if ! test -d ~/.zprezto; then
+if ! test -d "${HOME}/.zprezto"; then
   echo "get Prezto set up for zsh"
   zsh -c "git clone --recursive https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
   zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
@@ -112,13 +112,17 @@ else
   echo "prezto already set up"
 fi
 
-if ! test -d ~/dotfiles; then
+if ! test -d "${HOME}/dotfiles"; then
   echo "cloning dotfiles"
   git clone https://github.com/josephst/dotfiles.git "${HOME}/dotfiles"
   # ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
   # ln -s "${HOME}/dotfiles/.gitignore_global" "${HOME}/.gitignore_global"
   ln -s "${HOME}/dotfiles/ubuntu/.gitconfig" "${HOME}/.gitconfig"
   ln -s "${HOME}/dotfiles/ubuntu/.gemrc" "${HOME}/.gemrc"
+  if ! test -d ~/.config; then
+    mkdir -p ~/.config
+  fi
+  ln -s "${HOME}/dotfiles/ubuntu/.config/starship.toml" "${HOME}/.config/starship.toml"
   # ln -s "${HOME}/dotfiles/ubuntu/.p10k.zsh" "${HOME}/.p10k.zsh"
   # ln -s "${HOME}/dotfiles/.my_bin" "${HOME}/.my_bin"
   # ln -s "${HOME}/dotfiles/.vimrc" "${HOME}/.vimrc"
