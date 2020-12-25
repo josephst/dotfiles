@@ -106,8 +106,8 @@ if ! test -d ~/.zprezto; then
   git remote set-url origin git@github.com:josephst/prezto.git
   git remote add upstream https://github.com/sorin-ionescu/prezto.git
   popd
-  echo "installing starship (theme for zsh)"
-  curl -fsSL https://starship.rs/install.sh | sudo bash
+  #   echo "installing starship (theme for zsh)"
+  #   curl -fsSL https://starship.rs/install.sh | sudo bash
 else
   echo "prezto already set up"
 fi
