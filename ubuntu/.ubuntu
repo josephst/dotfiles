@@ -77,7 +77,7 @@ ruby --version
 
 
 echo "installing other common apps"
-sudo apt-get install -y httpie bat
+sudo apt-get install -y httpie bat jq
 
 # echo "installing apps with brew cask"
 # brew cask install alfred google-chrome firefox brave-browser bettertouchtool divvy \
