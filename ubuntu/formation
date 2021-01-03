@@ -162,11 +162,11 @@ fi
 # -----------------------------------------------------------------------------
 # Node
 # -----------------------------------------------------------------------------
-if ! [-x "$(command -v node)" ]; then
+if ! [ -x "$(command -v node)" ]; then
   step "Installing node…"
   curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   step "Installing latest Node…"
-  sudo apt-get install -y nodejs
+  sudo apt-get install -y -qq nodejs
   print_success "Node installed!"
   # nvm install node
   # nvm use node
@@ -180,7 +180,7 @@ fi
 # -----------------------------------------------------------------------------
 # Ruby & Rbenv & Rails
 # -----------------------------------------------------------------------------
-if ! [-x "$(command -v rbenv)" ]; then
+if ! [ -x "$(command -v rbenv)" ]; then
   step "Installing rbenv…"
   curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
   step "Installing Ruby 2.7.2"
@@ -200,7 +200,7 @@ fi
 # -----------------------------------------------------------------------------
 # Rust
 # -----------------------------------------------------------------------------
-if ! [-x "$(command -v rustup)" ]; then
+if ! [ -x "$(command -v rustup)" ]; then
   step "Installing rustup and rust…"
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   print_success "Rust installed!"
