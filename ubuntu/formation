@@ -140,10 +140,12 @@ esac
 # -----------------------------------------------------------------------------
 # Prezto
 # -----------------------------------------------------------------------------
+
+chapter "Installing Prezto and Starzhip…"
 if [ -d "$HOME/.zprezto" ]; then
   print_success_muted "Prezto already installed. Skipping."
 else
-  chapter "Installing Prezto and Starzhip…"
+  step "Installing Prezto…"
   # zsh installed in previous step
   zsh -c "git clone --recursive https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
   zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
@@ -155,7 +157,7 @@ else
   git remote set-url origin git@github.com:josephst/prezto.git
   git remote add upstream https://github.com/sorin-ionescu/prezto.git
   popd
-  echo "installing starship (theme for zsh)"
+  step "installing Starship"
   curl -fsSL https://starship.rs/install.sh | sudo bash -s -- -y
   print_success "Prezto and Starship installed"
 fi
@@ -163,8 +165,8 @@ fi
 # -----------------------------------------------------------------------------
 # Node
 # -----------------------------------------------------------------------------
+chapter "Installing Node…"
 if ! [ -x "$(command -v node)" ]; then
-  chapter "Installing node…"
   curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   step "Installing latest Node…"
   sudo apt-get install -y -qq nodejs
@@ -181,8 +183,8 @@ fi
 # -----------------------------------------------------------------------------
 # Ruby & Rbenv & Rails
 # -----------------------------------------------------------------------------
+chapter "Installing rbenv, Ruby, and Rails"
 if ! [ -x "$(command -v rbenv)" ]; then
-  chapter "Installing rbenv, Ruby, and Rails"
   step "Installing rbenv…"
   # make sure rbenv is available in bash
   # this is done before running the install script, so that rbenv can "see" itself after installing
@@ -204,8 +206,8 @@ fi
 # -----------------------------------------------------------------------------
 # Rust
 # -----------------------------------------------------------------------------
+chapter "Installing Rust"
 if ! [ -x "$(command -v rustup)" ]; then
-  chapter "Installing Rust"
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   print_success "Rust installed!"
   source $HOME/.cargo/env
