@@ -13,5 +13,6 @@ libreadline-dev
 libsqlite3-dev
 libssl-dev
 libyaml-dev
+vim
 zlib1g-dev
 zsh
