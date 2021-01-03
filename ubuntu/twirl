@@ -562,7 +562,7 @@ install_apt() {
     print_success_muted "$apt already installed. Skipping."
   else
     echo_install "Installing $apt"
-    sudo apt-get install -y $apt
+    sudo apt-get install -y -qq $apt
     print_in_green "${bold}✓ installed!${normal}\n"
   fi
 }
