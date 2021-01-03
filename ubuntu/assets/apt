@@ -2,6 +2,7 @@ autoconf
 bat
 bison
 build-essential
+curl
 httpie
 jq
 libffi-dev

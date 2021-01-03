@@ -162,7 +162,7 @@ fi
 # -----------------------------------------------------------------------------
 # Node
 # -----------------------------------------------------------------------------
-if ! cli_is_installed node > /dev/null; then
+if ! [-x "$(command -v node)" ]; then
   step "Installing node…"
   curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
   step "Installing latest Node…"
@@ -180,7 +180,7 @@ fi
 # -----------------------------------------------------------------------------
 # Ruby & Rbenv & Rails
 # -----------------------------------------------------------------------------
-if ! cli_is_installed rbenv; then
+if ! [-x "$(command -v rbenv)" ]; then
   step "Installing rbenv…"
   curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
   step "Installing Ruby 2.7.2"
@@ -200,7 +200,7 @@ fi
 # -----------------------------------------------------------------------------
 # Rust
 # -----------------------------------------------------------------------------
-if ! cli_is_installed rustc; then
+if ! [-x "$(command -v rustup)" ]; then
   step "Installing rustup and rust…"
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   print_success "Rust installed!"
@@ -296,7 +296,7 @@ fi
 if [ -e $cwd/assets/npm ]; then
   chapter "Installing npm packages…"
 
-  for pkg in $(<$cwd/swag/npm); do
+  for pkg in $(<$cwd/assets/npm); do
     KEY="${pkg%%::*}"
     VALUE="${pkg##*::}"
     install_npm_packages $KEY $VALUE
@@ -308,9 +308,9 @@ fi
 # OPTIONAL: Customizations
 ###############################################################################
 chapter "Adding mixins…"
-if [ -f "$cwd/ubuntu/.mixins" ]; then
+if [ -f "$cwd/.mixins" ]; then
   if ask "Do you want to add mixins?" Y; then
-    . "$cwd/ubuntu/.mixins"; printf "\n  Mixins added. 🔥 ${bold}Swag.${normal}\n";
+    . "$cwd/.mixins"; printf "\n  Mixins added. 🔥 ${bold}Swag.${normal}\n";
   else
     print_success_muted "Mixins declined. Skipped.";
   fi
