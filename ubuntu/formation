@@ -102,7 +102,7 @@ chapter "Installing Dependencies…"
 # -----------------------------------------------------------------------------
 # INSTALL: apt packages
 # -----------------------------------------------------------------------------
-if [ -e $cwd/swag/apt ]; then
+if [ -e $cwd/assets/apt ]; then
 	chapter "Installing apt packages…"
 
 	for aptpkg in $(<$cwd/assets/apt); do
@@ -293,7 +293,7 @@ fi
 ###############################################################################
 # INSTALL: npm packages
 ###############################################################################
-if [ -e $cwd/swag/npm ]; then
+if [ -e $cwd/assets/npm ]; then
 	chapter "Installing npm packages…"
 
 	for pkg in $(<$cwd/swag/npm); do

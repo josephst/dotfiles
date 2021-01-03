@@ -549,12 +549,12 @@ gem_install_or_update() {
 
 update_apt() {
   sudo apt-get update -y > /dev/null
-  print_in_green "apt sources updated"
+  print_success "apt sources updated"
 }
 
 upgrade_apt() {
   sudo apt-get upgrade -y > /dev/null
-  print_in_green "apt upgrade successful"
+  print_success "apt upgrade successful\n"
 }
 
 install_apt() {
