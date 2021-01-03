@@ -162,7 +162,7 @@ fi
 # -----------------------------------------------------------------------------
 # Node
 # -----------------------------------------------------------------------------
-if ! command -v node > /dev/null; then
+if ! cli_is_installed node > /dev/null; then
 	step "Installing node…"
 	curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 	step "Installing latest Node…"
@@ -171,8 +171,8 @@ if ! command -v node > /dev/null; then
 	# nvm install node
 	# nvm use node
 	# nvm run node --version
-	# nodev=$(node -v)
-	# print_success "Using Node $nodev!"
+	nodev=$(node -v)
+	print_success "Using Node $nodev!"
 else
 	print_success_muted "Node already installed. Skipping."
 fi
@@ -180,7 +180,7 @@ fi
 # -----------------------------------------------------------------------------
 # Ruby & Rbenv & Rails
 # -----------------------------------------------------------------------------
-if ! command -v rbenv > /dev/null; then
+if ! cli_is_installed rbenv; then
 	step "Installing rbenv…"
 	curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
 	step "Installing Ruby 2.7.2"
@@ -195,6 +195,20 @@ if ! command -v rbenv > /dev/null; then
 	gem_install_or_update rails
 else
 	print_success_muted "rbenv already installed. Skipping."
+fi
+
+# -----------------------------------------------------------------------------
+# Rust
+# -----------------------------------------------------------------------------
+if ! cli_is_installed rustc; then
+	step "Installing rustup and rust…"
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+	print_success "Rust installed!"
+	source $HOME/.cargo/env
+	rustv=$(rustc --version)
+	print_success "Using $rustv!"
+else
+	print_success_muted "Rustup already installed. Skipping."
 fi
 
 
