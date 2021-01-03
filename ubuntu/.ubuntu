@@ -59,7 +59,7 @@ echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
 
 echo "installing a few global npm packages"
-npm install --global serve
+npm install --global serve prettier npm-check-updates
 # npm install --global fkill-cli npm-quick-run semantic-release-cli npm-check-updates
 
 echo "installing rb-env to manage ruby"
