@@ -123,13 +123,12 @@ if ! test -d "${HOME}/dotfiles"; then
   git clone https://github.com/josephst/dotfiles.git "${HOME}/dotfiles"
   # ln -s "${HOME}/dotfiles/.zshrc" "${HOME}/.zshrc"
   # ln -s "${HOME}/dotfiles/.gitignore_global" "${HOME}/.gitignore_global"
-  ln -s "${HOME}/dotfiles/ubuntu/.gitconfig" "${HOME}/.gitconfig"
-  ln -s "${HOME}/dotfiles/ubuntu/.gemrc" "${HOME}/.gemrc"
+  ln -s "${HOME}/dotfiles/ubuntu/gitconfig" "${HOME}/.gitconfig"
+  ln -s "${HOME}/dotfiles/ubuntu/gemrc" "${HOME}/.gemrc"
   if ! test -d ~/.config; then
     mkdir -p ~/.config
   fi
-  ln -s "${HOME}/dotfiles/ubuntu/.config/starship.toml" "${HOME}/.config/starship.toml"
-  # ln -s "${HOME}/dotfiles/ubuntu/.p10k.zsh" "${HOME}/.p10k.zsh"
+  ln -s "${HOME}/dotfiles/ubuntu/config/starship.toml" "${HOME}/.config/starship.toml"
   # ln -s "${HOME}/dotfiles/.my_bin" "${HOME}/.my_bin"
   # ln -s "${HOME}/dotfiles/.vimrc" "${HOME}/.vimrc"
   # ln -s "${HOME}/dotfiles/.vimrc-parts" "${HOME}/.vimrc-parts"
