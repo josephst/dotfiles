@@ -18,11 +18,11 @@ set -e
 ###############################################################################
 
 if [ -e twirl ]; then
-	cd "$(dirname "${BASH_SOURCE[0]}")" \
-		&& . "twirl"
+  cd "$(dirname "${BASH_SOURCE[0]}")" \
+    && . "twirl"
 else
-	printf "\n ⚠️  ./twirl not found  💃🏾 First, you need to twirl on your haters\n"
-	exit 1
+  printf "\n ⚠️  ./twirl not found  💃🏾 First, you need to twirl on your haters\n"
+  exit 1
 fi
 
 ###############################################################################
@@ -103,11 +103,11 @@ chapter "Installing Dependencies…"
 # INSTALL: apt packages
 # -----------------------------------------------------------------------------
 if [ -e $cwd/assets/apt ]; then
-	chapter "Installing apt packages…"
+  chapter "Installing apt packages…"
 
-	for aptpkg in $(<$cwd/assets/apt); do
-		install_apt $aptpkg
-	done
+  for apt in $(<$cwd/assets/apt); do
+    install_apt $apt
+  done
 fi
 
 # # -----------------------------------------------------------------------------
@@ -141,16 +141,16 @@ esac
 # Prezto
 # -----------------------------------------------------------------------------
 if [ -d "$HOME/.zprezto" ]; then
-	print_success_muted "Prezto already installed. Skipping."
+  print_success_muted "Prezto already installed. Skipping."
 else
-	step "installing zprezto"
-	# zsh installed in previous step
-	zsh -c "git clone --recursive https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
+  step "installing zprezto"
+  # zsh installed in previous step
+  zsh -c "git clone --recursive https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\""
   zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
-  	echo \"linking \$rcfile to \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"\";
-  	ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
+    echo \"linking \$rcfile to \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"\";
+    ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
   done"
-	# switch to ssh instead of https after cloning (can't clone with ssh initially since ssh key not yet added to github"
+  # switch to ssh instead of https after cloning (can't clone with ssh initially since ssh key not yet added to github"
   pushd "${HOME}/.zprezto"
   git remote set-url origin git@github.com:josephst/prezto.git
   git remote add upstream https://github.com/sorin-ionescu/prezto.git
@@ -163,52 +163,52 @@ fi
 # Node
 # -----------------------------------------------------------------------------
 if ! cli_is_installed node > /dev/null; then
-	step "Installing node…"
-	curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-	step "Installing latest Node…"
-	sudo apt-get install -y nodejs
-	print_success "Node installed!"
-	# nvm install node
-	# nvm use node
-	# nvm run node --version
-	nodev=$(node -v)
-	print_success "Using Node $nodev!"
+  step "Installing node…"
+  curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+  step "Installing latest Node…"
+  sudo apt-get install -y nodejs
+  print_success "Node installed!"
+  # nvm install node
+  # nvm use node
+  # nvm run node --version
+  nodev=$(node -v)
+  print_success "Using Node $nodev!"
 else
-	print_success_muted "Node already installed. Skipping."
+  print_success_muted "Node already installed. Skipping."
 fi
 
 # -----------------------------------------------------------------------------
 # Ruby & Rbenv & Rails
 # -----------------------------------------------------------------------------
 if ! cli_is_installed rbenv; then
-	step "Installing rbenv…"
-	curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
-	step "Installing Ruby 2.7.2"
-	# make sure rbenv is available in shell
-	export PATH="$HOME/.rbenv/bin:$PATH"
-	eval "$(rbenv init -)"
-	rbenv install 2.7.2
-	rbenv global 2.7.2
-	rubyv=$(ruby --version)
-	print_success "Using $rubyv"
-	step "Installing Rails"
-	gem_install_or_update rails
+  step "Installing rbenv…"
+  curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+  step "Installing Ruby 2.7.2"
+  # make sure rbenv is available in shell
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+  rbenv install 2.7.2
+  rbenv global 2.7.2
+  rubyv=$(ruby --version)
+  print_success "Using $rubyv"
+  step "Installing Rails"
+  gem_install_or_update rails
 else
-	print_success_muted "rbenv already installed. Skipping."
+  print_success_muted "rbenv already installed. Skipping."
 fi
 
 # -----------------------------------------------------------------------------
 # Rust
 # -----------------------------------------------------------------------------
 if ! cli_is_installed rustc; then
-	step "Installing rustup and rust…"
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-	print_success "Rust installed!"
-	source $HOME/.cargo/env
-	rustv=$(rustc --version)
-	print_success "Using $rustv!"
+  step "Installing rustup and rust…"
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  print_success "Rust installed!"
+  source $HOME/.cargo/env
+  rustv=$(rustc --version)
+  print_success "Using $rustv!"
 else
-	print_success_muted "Rustup already installed. Skipping."
+  print_success_muted "Rustup already installed. Skipping."
 fi
 
 
@@ -294,13 +294,13 @@ fi
 # INSTALL: npm packages
 ###############################################################################
 if [ -e $cwd/assets/npm ]; then
-	chapter "Installing npm packages…"
+  chapter "Installing npm packages…"
 
-	for pkg in $(<$cwd/swag/npm); do
-		KEY="${pkg%%::*}"
-		VALUE="${pkg##*::}"
-		install_npm_packages $KEY $VALUE
-	done
+  for pkg in $(<$cwd/swag/npm); do
+    KEY="${pkg%%::*}"
+    VALUE="${pkg##*::}"
+    install_npm_packages $KEY $VALUE
+  done
 fi
 
 
@@ -309,13 +309,13 @@ fi
 ###############################################################################
 chapter "Adding mixins…"
 if [ -f "$cwd/ubuntu/.mixins" ]; then
-	if ask "Do you want to add mixins?" Y; then
-		. "$cwd/ubuntu/.mixins"; printf "\n  Mixins added. 🔥 ${bold}Swag.${normal}\n";
-	else
-		print_success_muted "Mixins declined. Skipped.";
-	fi
+  if ask "Do you want to add mixins?" Y; then
+    . "$cwd/ubuntu/.mixins"; printf "\n  Mixins added. 🔥 ${bold}Swag.${normal}\n";
+  else
+    print_success_muted "Mixins declined. Skipped.";
+  fi
 else
-	print_warning "No $cwd/ubuntu/.mixins found. Skipping."
+  print_warning "No $cwd/ubuntu/.mixins found. Skipping."
 fi
 
 ###############################################################################
