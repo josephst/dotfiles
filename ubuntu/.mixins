@@ -23,6 +23,7 @@ done
 
 set "symlinking dofiles…"
 symlink_dotfiles
+print_in_green "${bold}✓ done!${normal}\n"
 
 
 # step "Installing fonts…"
