@@ -601,7 +601,7 @@ install_npm_packages() {
   # $2 = cli name (such as ncu); $1 = npm package (such as npm-check-updates)
 	if [[ $(cli_is_installed $2) == 0 ]]; then
 		echo_install "Installing $1"
-		npm install $1 -g --silent
+		sudo npm install $1 -g --silent
 		print_in_green "${bold}✓ installed!${normal}\n"
 	else
 		print_success_muted "$1 already installed. Skipped."
