@@ -601,7 +601,7 @@ install_npm_packages() {
   # $2 = cli name (such as ncu); $1 = npm package (such as npm-check-updates)
 	if [[ $(cli_is_installed $2) == 0 ]]; then
 		echo_install "Installing $1"
-		sudo npm install $1 -g --silent
+		npm install $1 -g --silent
 		print_in_green "${bold}✓ installed!${normal}\n"
 	else
 		print_success_muted "$1 already installed. Skipped."
@@ -625,6 +625,29 @@ update_shell() {
     sudo sh -c "echo $shell_path >> /etc/shells"
   fi
   sudo chsh -s "$shell_path" "$USER"
+}
+
+alias install_asdf_plugin=add_or_update_asdf_plugin
+add_or_update_asdf_plugin() {
+  local name="$1"
+  local url="$2"
+
+  if ! asdf plugin-list | grep -Fq "$name"; then
+    asdf plugin-add "$name" "$url"
+  else
+    asdf plugin-update "$name"
+  fi
+}
+
+install_asdf_language() {
+  local language="$1"
+  local version
+  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
+
+  if ! asdf list "$language" | grep -Fq "$version"; then
+    asdf install "$language" "$version"
+    asdf global "$language" "$version"
+  fi
 }
 
 

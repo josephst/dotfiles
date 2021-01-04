@@ -141,7 +141,8 @@ esac
 # Prezto
 # -----------------------------------------------------------------------------
 
-chapter "Installing Prezto and Starzhip…"
+chapter "Installing Prezto and Starship…"
+# TODO: convert to oh-my-zsh
 if [ -d "$HOME/.zprezto" ]; then
   print_success_muted "Prezto already installed. Skipping."
 else
@@ -163,17 +164,31 @@ else
 fi
 
 # -----------------------------------------------------------------------------
+# asdf (version manager)
+# -----------------------------------------------------------------------------
+# TODO: check this portion of the script
+chapter "Installing asdf version manager…"
+if ! [ -d "$HOME/.asdf" ]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
+  print_success "asdf installed!"
+else
+  print_success_muted "asdf already installed"
+fi
+
+# -----------------------------------------------------------------------------
+# asdf plugins (version manager)
+# -----------------------------------------------------------------------------
+source "$HOME/.asdf/asdf.sh"
+add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
+
+# -----------------------------------------------------------------------------
 # Node
 # -----------------------------------------------------------------------------
 chapter "Installing Node…"
 if ! [ -x "$(command -v node)" ]; then
-  curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-  step "Installing latest Node…"
-  sudo apt-get install -y -qq nodejs
-  print_success "Node installed!"
-  # nvm install node
-  # nvm use node
-  # nvm run node --version
+  bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
+  install_asdf_language "nodejs"
   nodev=$(node -v)
   print_success "Using Node $nodev!"
 else
@@ -181,26 +196,18 @@ else
 fi
 
 # -----------------------------------------------------------------------------
-# Ruby & Rbenv & Rails
+# Ruby & Rails
 # -----------------------------------------------------------------------------
-chapter "Installing rbenv, Ruby, and Rails"
-if ! [ -x "$(command -v rbenv)" ]; then
-  step "Installing rbenv…"
-  # make sure rbenv is available in bash
-  # this is done before running the install script, so that rbenv can "see" itself after installing
-  # prezto takes care of making rbenv available in zsh, so this is only needed for this bash script
-  export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
-  curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
-  step "Installing Ruby 2.7.2"
-  eval "$(rbenv init -)"
-  rbenv install 2.7.2
-  rbenv global 2.7.2
+chapter "Installing Ruby and Rails"
+if ! [ -x "$(command -v ruby)" ]; then
+  install_asdf_language "ruby"
+  gem update --system --silent
   rubyv=$(ruby --version)
   print_success "Using $rubyv"
   step "Installing Rails"
   gem_install_or_update rails
 else
-  print_success_muted "rbenv already installed. Skipping."
+  print_success_muted "Ruby already installed. Skipping."
 fi
 
 # -----------------------------------------------------------------------------
