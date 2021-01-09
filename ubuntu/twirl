@@ -520,14 +520,14 @@ github_key_check() {
 
 create_ssh_key() {
   if ask "No SSH key found. Create one?" Y; then
-    ssh-keygen -t rsa; github_key_check;
+    ssh-keygen -t ed25519; github_key_check;
   else
     return 0;
   fi
 }
 
 ssh_key_setup() {
-  local pub=$HOME/.ssh/id_rsa.pub
+  local pub=$HOME/.ssh/id_ed25519.pub
   
   if ! [[ -f $pub ]]; then
     create_ssh_key
@@ -564,11 +564,23 @@ upgrade_apt() {
 }
 
 install_apt() {
-  if dpkg -s $apt &> /dev/null; then
-    print_success_muted "$apt already installed. Skipping."
+  # installs a list of apt packages
+  # uses global package_list array
+  local install_list=()
+  for pkg in ${package_list[@]}; do
+    if dpkg -s $pkg &> /dev/null; then
+      print_success_muted "$pkg already installed. Skipping."
+    else
+      # not yet installed, add to list
+      install_list+=($pkg)
+    fi
+  done
+
+  if [[ ${#install_list[@]} -eq 0 ]]; then
+    print_success_muted "No new packages to install."
   else
-    echo_install "Installing $apt"
-    sudo apt-get install -y -qq $apt
+    echo_install "Installing ${install_list[@]}\n"
+    sudo apt-get install -y -qq ${install_list[@]}
     print_in_green "${bold}✓ installed!${normal}\n"
   fi
 }

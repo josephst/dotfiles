@@ -104,9 +104,10 @@ chapter "Installing Dependencies…"
 if [ -e $cwd/assets/apt ]; then
   chapter "Installing apt packages…"
 
-  for apt in $(<$cwd/assets/apt); do
-    install_apt $apt
-  done
+  package_list=()
+  mapfile -t package_list < $cwd/assets/apt
+
+  install_apt package_list
 fi
 
 # # -----------------------------------------------------------------------------
@@ -147,7 +148,7 @@ if [ -d "$HOME/.zprezto" ]; then
 else
   step "Installing Prezto…"
   # zsh installed by apt
-  git clone --recursive -q https://github.com/josephst/prezto.git \"${ZDOTDIR:-$HOME}/.zprezto\"
+  git clone --recursive -q https://github.com/josephst/prezto.git ${ZDOTDIR:-$HOME}/.zprezto
   zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
     echo \"linking \$rcfile to \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"\";
     ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
