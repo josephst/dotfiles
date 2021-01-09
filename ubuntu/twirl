@@ -580,7 +580,7 @@ install_apt() {
     print_success_muted "No new packages to install."
   else
     echo_install "Installing ${install_list[@]}\n"
-    sudo apt-get install -y -qq ${install_list[@]}
+    sudo apt-get install -y -qq ${install_list[@]} > /dev/null
     print_in_green "${bold}✓ installed!${normal}\n"
   fi
 }
