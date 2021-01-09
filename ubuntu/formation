@@ -211,7 +211,7 @@ else
   print_success_muted "Ruby already installed. Skipping."
 fi
 
-if ! [ -x "$(command -v rails)"]; then
+if ! [ -x "$(command -v rails)" ]; then
   step "Installing Rails"
   gem_install_or_update rails
 else 
