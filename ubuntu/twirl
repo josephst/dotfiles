@@ -546,10 +546,9 @@ ssh_key_setup() {
 
 gem_install_or_update() {
   if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
+    gem update "$@" --no-document
   else
-    gem install "$@"
-    rbenv rehash
+    gem install "$@" --no-document
   fi
 }
 
@@ -669,8 +668,6 @@ install_asdf_language() {
     # version specified, install that version
     version=$(asdf list all "$language" "$2" | grep -v "[a-z]" | tail -1)
   fi
-
-  echo "installing language = $language and version = $version"
 
   if ! asdf list "$language" | grep -Fq "$version"; then
     asdf install "$language" "$version"

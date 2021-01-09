@@ -204,12 +204,17 @@ fi
 chapter "Installing Ruby and Rails"
 if ! [ -x "$(command -v ruby)" ]; then
   install_asdf_language "ruby" "2.7"
-  gem update --system --silent
+  gem update --system --silent --no-document
   rubyv=$(ruby --version)
   print_success "Using $rubyv"
+else
+  print_success_muted "Ruby already installed. Skipping."
+fi
+
+if ! [ -x "$(command -v rails)"]; then
   step "Installing Rails"
   gem_install_or_update rails
-else
+else 
   print_success_muted "Ruby already installed. Skipping."
 fi
 
