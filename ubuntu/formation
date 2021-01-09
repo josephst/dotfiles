@@ -169,7 +169,10 @@ fi
 # TODO: check this portion of the script
 chapter "Installing asdf version manager…"
 if ! [ -d "$HOME/.asdf" ]; then
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+  pushd ~/.asdf
+  git checkout "$(git describe --abbrev=0 --tags)"
+  popd
   print_success "asdf installed!"
 else
   print_success_muted "asdf already installed"
@@ -187,8 +190,8 @@ add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 # -----------------------------------------------------------------------------
 chapter "Installing Node…"
 if ! [ -x "$(command -v node)" ]; then
-  bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
-  install_asdf_language "nodejs"
+  bash -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring'
+  install_asdf_language "nodejs" "14"
   nodev=$(node -v)
   print_success "Using Node $nodev!"
 else
@@ -200,7 +203,7 @@ fi
 # -----------------------------------------------------------------------------
 chapter "Installing Ruby and Rails"
 if ! [ -x "$(command -v ruby)" ]; then
-  install_asdf_language "ruby"
+  install_asdf_language "ruby" "2.7"
   gem update --system --silent
   rubyv=$(ruby --version)
   print_success "Using $rubyv"
@@ -328,7 +331,7 @@ if [ -f "$cwd/.mixins" ]; then
     print_success_muted "Mixins declined. Skipped.";
   fi
 else
-  print_warning "No $cwd/ubuntu/.mixins found. Skipping."
+  print_warning "No $cwd/.mixins found. Skipping."
 fi
 
 ###############################################################################

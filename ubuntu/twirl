@@ -505,19 +505,19 @@ copy_key_github() {
 }
 
 github_key_check() {
-	if ask "SSH key found. Enter it in Github?" Y; then
-		copy_key_github;
-	else
-		print_success "SSH key";
-	fi
+    if ask "SSH key found. Enter it in Github?" Y; then
+        copy_key_github;
+    else
+        print_success "SSH key";
+    fi
 }
 
 create_ssh_key() {
-	if ask "No SSH key found. Create one?" Y; then
-		ssh-keygen -t rsa; github_key_check;
-	else
-		return 0;
-	fi
+    if ask "No SSH key found. Create one?" Y; then
+        ssh-keygen -t rsa; github_key_check;
+    else
+        return 0;
+    fi
 }
 
 ssh_key_setup() {
@@ -599,13 +599,13 @@ install_apt() {
 
 install_npm_packages() {
   # $2 = cli name (such as ncu); $1 = npm package (such as npm-check-updates)
-	if [[ $(cli_is_installed $2) == 0 ]]; then
-		echo_install "Installing $1"
-		npm install $1 -g --silent
-		print_in_green "${bold}✓ installed!${normal}\n"
-	else
-		print_success_muted "$1 already installed. Skipped."
-	fi
+    if [[ $(cli_is_installed $2) == 0 ]]; then
+        echo_install "Installing $1"
+        npm install $1 -g --silent
+        print_in_green "${bold}✓ installed!${normal}\n"
+    else
+        print_success_muted "$1 already installed. Skipped."
+    fi
 }
 
 # The releases are returned in the format
@@ -641,8 +641,18 @@ add_or_update_asdf_plugin() {
 
 install_asdf_language() {
   local language="$1"
+  # install latest specified version, or the latest stable version otherwise
   local version
-  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
+  
+  if [[ -z "$2" ]]; then
+    # no version specified; go with latest available
+    version=$(asdf latest "$language")
+  else
+    # version specified, install that version
+    version=$(asdf list all "$language" "$2" | grep -v "[a-z]" | tail -1)
+  fi
+
+  echo "installing language = $language and version = $version"
 
   if ! asdf list "$language" | grep -Fq "$version"; then
     asdf install "$language" "$version"
