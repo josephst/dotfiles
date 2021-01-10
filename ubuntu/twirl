@@ -60,7 +60,7 @@ _show_spinner() {
   # things correctly, it needs special treatment, hence,
   # the "is Travis CI?" checks.
 
-  if [ "$TRAVIS" != "true" ]; then
+  if [ -n "${TRAVIS:-}" ] && [ "$TRAVIS" != "true" ]; then
     # Provide more space so that the text hopefully
     # doesn't reach the bottom line of the terminal window.
     #
@@ -560,12 +560,12 @@ gem_install_or_update() {
 }
 
 update_apt() {
-  sudo apt-get update -y > /dev/null
+  sudo apt-get update -yqq > /dev/null
   print_success "apt sources updated"
 }
 
 upgrade_apt() {
-  sudo apt-get upgrade -y > /dev/null
+  sudo apt-get upgrade -yqq > /dev/null
   print_success "apt upgrade successful\n"
 }
 
@@ -586,7 +586,7 @@ install_apt() {
     print_success_muted "No new packages to install."
   else
     echo_install "Installing " "${install_list[@]}" "\n"
-    sudo apt-get install -y -qq "${install_list[@]}" > /dev/null
+    sudo apt-get install -yqq "${install_list[@]}" > /dev/null
     print_in_green "${bold}✓ installed!${normal}\n"
   fi
 }
