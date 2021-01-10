@@ -6,19 +6,19 @@
 
 count=1
 
-reset="\033[0m"
-highlight="\033[41m\033[97m"
-dot="\033[31m▸ $reset"
-dim="\033[2m"
-blue="\e[34m"
-green="\e[32m"
-yellow="\e[33m"
-tag_green="\e[30;42m"
-tag_blue="\e[30;46m"
-bold=$(tput bold)
-normal=$(tput sgr0)
-underline="\e[37;4m"
-indent="   "
+export reset="\033[0m"
+export highlight="\033[41m\033[97m"
+export dot="\033[31m▸ $reset"
+export dim="\033[2m"
+export blue="\e[34m"
+export green="\e[32m"
+export yellow="\e[33m"
+export tag_green="\e[30;42m"
+export tag_blue="\e[30;46m"
+export bold=$(tput bold)
+export normal=$(tput sgr0)
+export underline="\e[37;4m"
+export indent="   "
 
 # Get full directory name of this script
 cwd="$(cd "$(dirname "$0")" && pwd)"
@@ -128,7 +128,9 @@ _set_trap() {
 _link_file() {
   local src=$1 dst=$2
 
-  local overwrite= backup= skip=
+  local overwrite=
+  local backup=
+  local skip=
   local action=
 
   # -f = file exists; -d = directory exists; -L = symlink exists
@@ -136,7 +138,8 @@ _link_file() {
   then
     if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
     then
-      local currentSrc="$(readlink $dst)"
+      local currentSrc
+      currentSrc=$(readlink "$dst")
 
       if [ "$currentSrc" == "$src" ]
         then
@@ -145,7 +148,7 @@ _link_file() {
 
         printf "\r   ${yellow}!${reset} File already exists: $dst ($(basename "$src")), what do you want to do?
       [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all? "
-        read -n 1 action
+        read -r -n 1 action
 
         case "$action" in
           o )
@@ -332,11 +335,11 @@ get_os_version() {
 }
 
 get_installed_package_version() {
-  dpkg -s $1 | grep '^Version' | cut -d' ' -f2
+  dpkg -s "$1" | grep '^Version' | cut -d' ' -f2
 }
 
 check_internet_connection() {
-  if [ ping -q -w1 -c1 google.com &>/dev/null ]; then
+  if [[ $(ping -q -w 1 -c 1 google.com &> /dev/null) ]]; then
     print_error "Please check your internet connection";
   exit 0
   else
@@ -498,7 +501,7 @@ cli_is_installed() {
   # set to 1 initially
   local return_=1
   # set to 0 if not found
-  type $1 >/dev/null 2>&1 || { local return_=0; }
+  type "$1" >/dev/null 2>&1 || { local return_=0; }
   # return value
   echo "$return_"
 }
@@ -507,9 +510,9 @@ copy_key_github() {
   # adapted for WSL2
   inform 'Public key copied! Paste into Github…'
 # [[ -f $pub ]] && cat $pub | pbcopy
-  [[ -f $pub ]] && cat $pub | /mnt/c/Windows/System32/clip.exe
+  [[ -f $pub ]] && < "$pub" /mnt/c/Windows/System32/clip.exe
   "/mnt/c/Windows/explorer.exe" 'https://github.com/settings/keys'
-  read -p "   ✦  Press enter to continue…"
+  read -r -p "   ✦  Press enter to continue…"
   print_success "SSH key"
   return
 }
@@ -570,20 +573,20 @@ install_apt() {
   # installs a list of apt packages
   # uses package_list array
   local install_list=()
-  for pkg in ${package_list[@]}; do
-    if dpkg -s $pkg &> /dev/null; then
+  for pkg in "${package_list[@]}"; do
+    if dpkg -s "$pkg" &> /dev/null; then
       print_success_muted "$pkg already installed. Skipping."
     else
       # not yet installed, add to list
-      install_list+=($pkg)
+      install_list+=("$pkg")
     fi
   done
 
   if [[ ${#install_list[@]} -eq 0 ]]; then
     print_success_muted "No new packages to install."
   else
-    echo_install "Installing ${install_list[@]}\n"
-    sudo apt-get install -y -qq ${install_list[@]} > /dev/null
+    echo_install "Installing " "${install_list[@]}" "\n"
+    sudo apt-get install -y -qq "${install_list[@]}" > /dev/null
     print_in_green "${bold}✓ installed!${normal}\n"
   fi
 }
@@ -620,9 +623,9 @@ install_apt() {
 
 install_npm_packages() {
   # $2 = cli name (such as ncu); $1 = npm package (such as npm-check-updates)
-  if [[ $(cli_is_installed $2) == 0 ]]; then
+  if [[ $(cli_is_installed "$2") == 0 ]]; then
     echo_install "Installing $1"
-    npm install $1 -g --silent
+    npm install "$1" -g --silent
     print_in_green "${bold}✓ installed!${normal}\n"
   else
     print_success_muted "$1 already installed. Skipped."
@@ -638,11 +641,12 @@ get_github_version_latest() {
 
 # install a package from a url
 install_update_dpkg() {
-  local temp_dir=$(mktemp -d --tmpdir) || exit 1
+  local temp_dir
+  temp_dir=$(mktemp -d --tmpdir) || exit 1
   local filename=${1##*/}
-  wget -P $temp_dir $1 --quiet
-  sudo dpkg -i $temp_dir/$filename
-  rm -rf $temp_dir
+  wget -P "$temp_dir" "$1" --quiet
+  sudo dpkg -i "$temp_dir/$filename"
+  rm -rf "$temp_dir"
 }
 
 update_shell() {
@@ -723,7 +727,7 @@ announce() {
 }
 
 step() {
-  printf "\n   ${dot}${underline}$@${reset}\n"
+  printf "\n   ${dot}${underline}$*${reset}\n"
 }
 
 label_blue() {

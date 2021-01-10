@@ -17,7 +17,8 @@ trap 'ret=$?; test $ret -ne 0 && printf "\n   \e[31m\033[0m  Formation failed
 ###############################################################################
 
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
-if [ -e $script_dir/twirl ]; then
+if [ -e "$script_dir/twirl" ]; then
+  # shellcheck source=ubuntu/twirl
   cd "$(dirname "${BASH_SOURCE[0]}")" && . "twirl"
 else
   printf "\n ⚠️  ./twirl not found  💃🏾 First, you need to twirl on your haters\n"
@@ -101,11 +102,12 @@ chapter "Installing Dependencies…"
 # -----------------------------------------------------------------------------
 # INSTALL: apt packages
 # -----------------------------------------------------------------------------
-if [ -e $cwd/assets/apt ]; then
+if [ -e "$cwd/assets/apt" ]; then
   chapter "Installing apt packages…"
 
-  local package_list=()
-  mapfile -t package_list < $cwd/assets/apt
+  package_list=()
+  mapfile -t package_list < "$cwd/assets/apt"
+  export package_list
 
   install_apt
 fi
@@ -217,7 +219,7 @@ chapter "Installing Rust"
 if ! [ -x "$(command -v rustup)" ]; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   print_success "Rust installed!"
-  source $HOME/.cargo/env
+  source "$HOME/.cargo/env"
   # does not need to be added to .zshrc since rust installer automatically adds itself to ~/.profile
   rustv=$(rustc --version)
   print_success "Using $rustv!"
@@ -307,13 +309,13 @@ fi
 ###############################################################################
 # INSTALL: npm packages
 ###############################################################################
-if [ -e $cwd/assets/npm ]; then
+if [ -e "$cwd/assets/npm" ]; then
   chapter "Installing npm packages…"
 
-  for pkg in $(<$cwd/assets/npm); do
+  for pkg in $(<"$cwd/assets/npm"); do
     KEY="${pkg%%::*}"
     VALUE="${pkg##*::}"
-    install_npm_packages $KEY $VALUE
+    install_npm_packages "$KEY" "$VALUE"
   done
 fi
 
