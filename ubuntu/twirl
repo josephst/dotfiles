@@ -23,7 +23,7 @@ export indent="   "
 # Get full directory name of this script
 cwd=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
-DOTFILES_ROOT=$cwd/ubuntu/dotfiles
+DOTFILES_ROOT=$cwd/dotfiles
 
 ###############################################################################
 # Utility Functions
