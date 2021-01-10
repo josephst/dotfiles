@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 ###############################################################################
 # VARIABLES
@@ -746,4 +746,32 @@ e_lemon_ated() {
     ╰────────────────────────────────────────────────────╯
 
     "
+}
+
+###############################################################################
+# Additional Scripts & Functions
+###############################################################################
+
+# from Cătălin’s dotfiles (https://github.com/alrra/dotfiles)
+create_gitconfig_local() {
+
+  local FILE_PATH="$HOME/.gitconfig.local"
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  if [[ ! -e "$FILE_PATH" ]]; then
+    printf "%s\n" \
+"[commit]
+  # Sign commits using GPG.
+  # https://help.github.com/articles/signing-commits-using-gpg/
+  # gpgsign = true
+[user]
+  name =
+  email =
+  # signingkey =" \
+    >> "$FILE_PATH"
+  fi
+
+  print_result $? "$FILE_PATH"
+
 }
