@@ -41,7 +41,7 @@ _
 |/  /  \_/  |  / |/ |/ |  /  |  |  |  /  \_/ |/ |
 |__/\__/    |_/  |  |  |_/\_/|_/|_/|_/\__/   |  |
 |\  ---------------------------------------------
-|/  Cause you slay           [for Bash 3.2 - 3.9]
+|/  Cause you slay               [for Bash > 3.2]
 ╭───────────────────────────────────────────────────╮
 │  Okay developers now let's get in ${bold}formation${normal}.      │
 │───────────────────────────────────────────────────│
@@ -104,10 +104,10 @@ chapter "Installing Dependencies…"
 if [ -e $cwd/assets/apt ]; then
   chapter "Installing apt packages…"
 
-  package_list=()
+  local package_list=()
   mapfile -t package_list < $cwd/assets/apt
 
-  install_apt package_list
+  install_apt
 fi
 
 # # -----------------------------------------------------------------------------
@@ -138,29 +138,22 @@ case "$SHELL" in
 esac
 
 # -----------------------------------------------------------------------------
-# Prezto
+# Oh-My-Zsh
 # -----------------------------------------------------------------------------
 
-chapter "Installing Prezto and Starship…"
-# TODO: convert to oh-my-zsh
-if [ -d "$HOME/.zprezto" ]; then
-  print_success_muted "Prezto already installed. Skipping."
+chapter "Installing Oh-My-Zsh and Starship…"
+if [ -d "$HOME/.oh-my-zsh" ]; then
+  print_success_muted "OMZ already installed. Skipping."
 else
-  step "Installing Prezto…"
+  step "Installing OMZ"
   # zsh installed by apt
-  git clone --recursive -q https://github.com/josephst/prezto.git ${ZDOTDIR:-$HOME}/.zprezto
-  zsh -c "setopt EXTENDED_GLOB && for rcfile in \"${ZDOTDIR:-$HOME}\"/.zprezto/runcoms/^README.md(.N); do
-    echo \"linking \$rcfile to \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"\";
-    ln -s \"\$rcfile\" \"${ZDOTDIR:-$HOME}/.\${rcfile:t}\"
-  done"
-# switch to ssh instead of https after cloning (can't clone with ssh initially since ssh key not yet added to github"
-pushd "${HOME}/.zprezto"
-git remote set-url origin git@github.com:josephst/prezto.git
-git remote add upstream https://github.com/sorin-ionescu/prezto.git
-popd
-step "installing Starship"
-curl -fsSL https://starship.rs/install.sh | sudo bash -s -- -y
-print_success "Prezto and Starship installed"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  # delete zshrc so that there's not a file conflict when symlinking later
+  rm ~/.zshrc
+  # 
+  step "installing Starship"
+  curl -fsSL https://starship.rs/install.sh | sudo bash -s -- -y
+  print_success "OMZ and Starship installed"
 fi
 
 # -----------------------------------------------------------------------------

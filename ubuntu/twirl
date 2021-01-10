@@ -134,7 +134,6 @@ _link_file() {
   # -f = file exists; -d = directory exists; -L = symlink exists
   if [ -f "$dst" ] || [ -d "$dst" ] || [ -L "$dst" ]
   then
-
     if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
     then
       local currentSrc="$(readlink $dst)"
@@ -421,6 +420,7 @@ mkd() {
 symlink_dotfiles() {
   local overwrite_all=false backup_all=false skip_all=false
 
+  # TODO: preserve directory structure (for example, symlink within a .config folder)
   for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
   do
     dst="$HOME/.$(basename "${src%.*}")"
@@ -564,7 +564,7 @@ upgrade_apt() {
 
 install_apt() {
   # installs a list of apt packages
-  # uses global package_list array
+  # uses package_list array
   local install_list=()
   for pkg in ${package_list[@]}; do
     if dpkg -s $pkg &> /dev/null; then

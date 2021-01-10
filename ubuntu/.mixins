@@ -21,9 +21,12 @@ for dir in ${DIRECTORIES[@]}; do
     mkd $dir
 done
 
-set "symlinking dofiles…"
+step "Symlinking dofiles…"
 symlink_dotfiles
 print_in_green "${bold}✓ done!${normal}\n"
+
+step "Installing latest version of bat"
+# TODO: download and install bat from github
 
 
 # step "Installing fonts…"
