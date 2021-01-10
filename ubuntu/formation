@@ -9,15 +9,15 @@
 # ERROR: Let the user know if the script fails
 ###############################################################################
 
+set -Eeuo pipefail
 trap 'ret=$?; test $ret -ne 0 && printf "\n   \e[31m\033[0m  Formation failed  \e[31m\033[0m\n" >&2; exit $ret' EXIT
-
-set -e
 
 ###############################################################################
 # TWIRL: Check for required functions file
 ###############################################################################
 
-if [ -e twirl ]; then
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+if [ -e $script_dir/twirl ]; then
   cd "$(dirname "${BASH_SOURCE[0]}")" && . "twirl"
 else
   printf "\n ⚠️  ./twirl not found  💃🏾 First, you need to twirl on your haters\n"
@@ -159,7 +159,6 @@ fi
 # -----------------------------------------------------------------------------
 # asdf (version manager)
 # -----------------------------------------------------------------------------
-# TODO: check this portion of the script
 chapter "Installing asdf version manager…"
 if ! [ -d "$HOME/.asdf" ]; then
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf
