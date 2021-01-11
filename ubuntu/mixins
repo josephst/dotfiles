@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # SETUP_ROOT=$HOME/.setup
 
@@ -8,6 +8,8 @@ DIRECTORIES=(
   "$HOME/code"
   "$HOME/Downloads"
 )
+
+
 
 # NERDFONTS=(
 #   SpaceMono
@@ -21,7 +23,7 @@ for dir in "${DIRECTORIES[@]}"; do
   mkd "$dir"
 done
 
-step "Symlinking dofiles…"
+step "Symlinking dotfiles…"
 symlink_dotfiles
 
 step "Creating local config files"
@@ -37,14 +39,14 @@ if [[ -x $(command -v bat) ]] || [[ -x $(command -v batcat) ]] ; then
   if dpkg --compare-versions "$INSTALLED_BAT_VERSION" "lt" "${BAT_VERSION#v}"; then
     # update bat
     install_update_dpkg "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/$BAT_FILENAME"
-    print_success "bat $BAT_VERSION installed"
+    print_in_green "    ✓ bat $BAT_VERSION installed\n"
   else
-    print_muted "bat already installed and up to date; skipping"
+    print_success_muted "bat already installed and up to date. Skipping"
   fi
 else
   # bat not yet installed
   install_update_dpkg "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/$BAT_FILENAME"
-  print_success "bat $BAT_VERSION installed"
+  print_in_green "    ✓ bat $BAT_VERSION installed\n"
 fi
 
 

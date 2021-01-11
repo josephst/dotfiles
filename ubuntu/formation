@@ -311,7 +311,10 @@ fi
 if [ -e "$cwd/assets/npm" ]; then
   chapter "Installing npm packages…"
 
-  npm install -g npm --silent
+  # first, update npm if necessary
+  if [[ $(npm outdated -g npm > /dev/null ) -ne 0 ]]; then
+    npm install -g npm --silent
+  fi
 
   for pkg in $(<"$cwd/assets/npm"); do
     KEY="${pkg%%::*}"
@@ -325,15 +328,17 @@ fi
 # OPTIONAL: Customizations
 ###############################################################################
 chapter "Adding mixins…"
-if [ -f "$cwd/.mixins" ]; then
+if [ -f "$cwd/mixins" ]; then
   if ask "Do you want to add mixins?" Y; then
-    . "$cwd/.mixins"; printf "\n  Mixins added. 🔥 ${bold}Swag.${normal}\n";
+    . "$cwd/mixins"; announce "Mixins added. 🔥 ${bold}Swag.${normal}";
   else
-    print_success_muted "Mixins declined. Skipped.";
+    print_success_muted "Mixins declined.";
   fi
 else
   print_warning "No $cwd/.mixins found. Skipping."
 fi
+
+printf "\n"
 
 ###############################################################################
 # 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
