@@ -3,7 +3,7 @@
 # based on thoughtbot laptop script (https://github.com/thoughtbot/laptop)
 # and on minimarkham's formation script (https://github.com/minamarkham/formation/blob/master/slay)
 
-#!/usr/bin/env bash
+# usage: ./formation 2>&1 | tee ~/formation.log
 
 ###############################################################################
 # ERROR: Let the user know if the script fails
