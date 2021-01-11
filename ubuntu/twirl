@@ -142,11 +142,12 @@ _link_file() {
         currentSrc=$(readlink "$dst")
       fi
 
-      if [[ -n "$currentSrc" ]] && [[ "$currentSrc" == "$src" ]]; then
+      if [[ -n "${currentSrc:-}" ]] && [[ "$currentSrc" == "$src" ]]; then
+        # check if currentSrc is and non-empty && if it points to the existing symlink
         skip=true;
       else
-        printf "\r   ${yellow}!${reset} File already exists: $dst ($(basename "$src")), what do you want to do?
-      [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all? "
+        printf "\r    ${yellow}!${reset} File already exists: $dst ($(basename "$src")), what do you want to do?
+      [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all? \n"
         read -r -n 1 action
 
         case "$action" in
@@ -174,23 +175,23 @@ _link_file() {
 
     if [ "$overwrite" == "true" ]; then
       rm -rf "$dst"
-      print_in_green "     ✓ deleted $dst\n"
+      print_in_green "    ✓ deleted $dst\n"
     fi
 
     if [ "$backup" == "true" ]; then
       mv "$dst" "${dst}.backup"
-      print_in_green "     ✓ moved $dst to ${dst}.backup\n"
+      print_in_green "    ✓ moved $dst to ${dst}.backup\n"
     fi
 
     if [ "$skip" == "true" ]; then
-      printf "  ${dim}   ✓ $src already linked. Skipped.${reset}\n"
+      printf "${dim}    ✓ $src already linked. Skipped.${reset}\n"
     fi
   fi
 
   if [ "$skip" != "true" ]; then
       # "false" or empty
     ln -s "$1" "$2"
-    print_in_green "     ✓ linked $1 to $2\n"
+    print_in_green "    ✓ linked $1 to $2\n"
   fi
 }
 
@@ -411,7 +412,7 @@ mkd() {
       if [ ! -d "$1" ]; then
         print_error "$1 - a file with the same name already exists!"
       else
-        printf "     ${dim}✓ $1 already exists. Skipped.${reset}\n"
+        printf "    ${dim}✓ $1 already exists. Skipped.${reset}\n"
       fi
     else
       execute "mkdir -p $1" "$1"
