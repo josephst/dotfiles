@@ -107,9 +107,8 @@ if [ -e "$cwd/assets/apt" ]; then
 
   package_list=()
   mapfile -t package_list < "$cwd/assets/apt"
-  export package_list
 
-  install_apt
+  install_apt_list "${package_list[@]}"
 fi
 
 # # -----------------------------------------------------------------------------
@@ -209,7 +208,7 @@ if ! [ -x "$(command -v rails)" ]; then
   step "Installing Rails"
   gem_install_or_update rails
 else 
-  print_success_muted "Ruby already installed. Skipping."
+  print_success_muted "Rails already installed. Skipping."
 fi
 
 # -----------------------------------------------------------------------------
@@ -311,6 +310,8 @@ fi
 ###############################################################################
 if [ -e "$cwd/assets/npm" ]; then
   chapter "Installing npm packages…"
+
+  npm install -g npm --silent
 
   for pkg in $(<"$cwd/assets/npm"); do
     KEY="${pkg%%::*}"

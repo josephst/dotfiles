@@ -134,18 +134,17 @@ _link_file() {
   local action=
 
   # -f = file exists; -d = directory exists; -L = symlink exists
-  if [ -f "$dst" ] || [ -d "$dst" ] || [ -L "$dst" ]
-  then
-    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
-    then
+  if [ -f "$dst" ] || [ -d "$dst" ] || [ -L "$dst" ]; then
+    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]; then
       local currentSrc
-      currentSrc=$(readlink "$dst")
 
-      if [ "$currentSrc" == "$src" ]
-        then
-          skip=true;
+      if [[ -L "$dst" ]]; then
+        currentSrc=$(readlink "$dst")
+      fi
+
+      if [[ -n "$currentSrc" ]] && [[ "$currentSrc" == "$src" ]]; then
+        skip=true;
       else
-
         printf "\r   ${yellow}!${reset} File already exists: $dst ($(basename "$src")), what do you want to do?
       [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all? "
         read -r -n 1 action
@@ -173,28 +172,25 @@ _link_file() {
     backup=${backup:-$backup_all}
     skip=${skip:-$skip_all}
 
-    if [ "$overwrite" == "true" ]
-    then
+    if [ "$overwrite" == "true" ]; then
       rm -rf "$dst"
-      print_in_green "\n     ✓ deleted $dst"
+      print_in_green "     ✓ deleted $dst\n"
     fi
 
-    if [ "$backup" == "true" ]
-    then
+    if [ "$backup" == "true" ]; then
       mv "$dst" "${dst}.backup"
-      print_in_green "\n     ✓ moved $dst to ${dst}.backup"
+      print_in_green "     ✓ moved $dst to ${dst}.backup\n"
     fi
 
-    if [ "$skip" == "true" ]
-    then
-      printf "\n  ${dim}   ✓ $src already linked. Skipped.${reset}"
+    if [ "$skip" == "true" ]; then
+      printf "  ${dim}   ✓ $src already linked. Skipped.${reset}\n"
     fi
   fi
 
-  if [ "$skip" != "true" ]  # "false" or empty
-  then
+  if [ "$skip" != "true" ]; then
+      # "false" or empty
     ln -s "$1" "$2"
-    print_in_green "\n     ✓ linked $1 to $2"
+    print_in_green "     ✓ linked $1 to $2\n"
   fi
 }
 
@@ -288,8 +284,7 @@ print_error() {
 ###############################################################################
 
 check_bash_version() {
-  if ((BASH_VERSINFO[0] < 3))
-  then
+  if ((BASH_VERSINFO[0] < 3)); then
     print_error "Sorry, you need at least bash-3.0 to run this script."
     exit 1
   fi
@@ -476,7 +471,7 @@ ask() {
     echo -n "  [?] $1 [$prompt] "
 
     # Read the answer (use /dev/tty in case stdin is redirected from somewhere else)
-    read reply </dev/tty
+    read -r reply </dev/tty
 
     # Default?
     if [ -z "$reply" ]; then
@@ -569,11 +564,11 @@ upgrade_apt() {
   print_success "apt upgrade successful\n"
 }
 
-install_apt() {
+install_apt_list() {
   # installs a list of apt packages
   # uses package_list array
   local install_list=()
-  for pkg in "${package_list[@]}"; do
+  for pkg in "$@"; do
     if dpkg -s "$pkg" &> /dev/null; then
       print_success_muted "$pkg already installed. Skipping."
     else
