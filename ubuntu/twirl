@@ -176,25 +176,25 @@ _link_file() {
     if [ "$overwrite" == "true" ]
     then
       rm -rf "$dst"
-      print_in_green "\n      ✓ deleted $dst"
+      print_in_green "\n     ✓ deleted $dst"
     fi
 
     if [ "$backup" == "true" ]
     then
       mv "$dst" "${dst}.backup"
-      print_in_green "\n      ✓ moved $dst to ${dst}.backup"
+      print_in_green "\n     ✓ moved $dst to ${dst}.backup"
     fi
 
     if [ "$skip" == "true" ]
     then
-      printf "\n  ${dim}    ✓ $src already linked. Skipped.${reset}"
+      printf "\n  ${dim}   ✓ $src already linked. Skipped.${reset}"
     fi
   fi
 
   if [ "$skip" != "true" ]  # "false" or empty
   then
     ln -s "$1" "$2"
-    print_in_green "\n      ✓ linked $1 to $2"
+    print_in_green "\n     ✓ linked $1 to $2"
   fi
 }
 

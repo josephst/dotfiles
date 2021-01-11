@@ -23,7 +23,6 @@ done
 
 step "Symlinking dofiles…"
 symlink_dotfiles
-print_in_green "${bold}✓ done!${normal}\n"
 
 step "Creating local config files"
 create_gitconfig_local
