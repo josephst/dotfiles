@@ -19,7 +19,7 @@ trap 'ret=$?; test $ret -ne 0 && printf "\n   \e[31m\033[0m  Formation failed
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 if [ -e "$script_dir/twirl" ]; then
   # shellcheck source=ubuntu/twirl
-  cd "$(dirname "${BASH_SOURCE[0]}")" && . "twirl"
+  cd "$script_dir" && . "twirl"
 else
   printf "\n ⚠️  ./twirl not found  💃🏾 First, you need to twirl on your haters\n"
   exit 1
@@ -312,8 +312,8 @@ if [ -e "$cwd/assets/npm" ]; then
   chapter "Installing npm packages…"
 
   # first, update npm if necessary
-  if [[ $(npm outdated -g npm > /dev/null ) -ne 0 ]]; then
-    npm install -g npm --silent
+  if [[ $(npm outdated -g npm &> /dev/null ) -ne 0 ]]; then
+    npm install -g npm --silent &> /dev/null
   fi
 
   for pkg in $(<"$cwd/assets/npm"); do
@@ -330,7 +330,7 @@ fi
 chapter "Adding mixins…"
 if [ -f "$cwd/mixins" ]; then
   if ask "Do you want to add mixins?" Y; then
-    . "$cwd/mixins"; announce "Mixins added. 🔥 ${bold}Swag.${normal}";
+    . "$cwd/mixins"; step "Mixins added. 🔥 ${bold}Swag.${normal}";
   else
     print_success_muted "Mixins declined.";
   fi
@@ -338,9 +338,7 @@ else
   print_warning "No $cwd/.mixins found. Skipping."
 fi
 
-printf "\n"
-
 ###############################################################################
 # 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
 ###############################################################################
-e_lemon_ated
+# e_lemon_ated
