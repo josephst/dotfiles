@@ -75,6 +75,7 @@ ZSH_CUSTOM="$HOME/dotfiles/ubuntu/zsh-custom"
 plugins=(git asdf alias-finder history-substring-search zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+export STARSHIP_CONFIG=~/.starship.toml
 eval "$(starship init zsh)"
 
 # User configuration
@@ -90,7 +91,14 @@ eval "$(starship init zsh)"
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='vim'
+if [[ -x "$(command -v nvim)" ]]; then
+  export EDITOR="nvim"
+  alias vim="nvim"
+  alias vi="nvim"
+else
+  export EDITOR="vim"
+fi
+
 export VISUAL="$VISUAL"
 
 # Compilation flags
