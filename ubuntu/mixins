@@ -57,7 +57,7 @@ if [[ ! -e /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable-focal.list ]]; then
 fi
 # install if not yet installed; update if already installed
 sudo apt-get install -yqq neovim
-print_in_green "    ✓ neovim installed\n"
+print_success "neovim installed"
 # TODO: redo dotfiles linking config so that this step isn't necessary
 NVIM_CONFIG="$HOME/.config/nvim/init.vim"
 if [[ ! -e "$NVIM_CONFIG" ]]; then
