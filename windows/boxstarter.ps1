@@ -169,6 +169,7 @@ choco install hackfont -y
 choco install git --params "/GitOnlyOnPath /NoAutoCrlf /WindowsTerminal /NoShellIntegration"  -y 
 choco install poshgit  -y 
 choco install Git-Credential-Manager-for-Windows  -y
+choco install gh -y
 choco install python  -y 
 py -3 -m pip install -U pip
 py -3 -m pip install --user pipenv
