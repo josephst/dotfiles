@@ -49,6 +49,28 @@ else
   print_in_green "    ✓ bat $BAT_VERSION installed\n"
 fi
 
+step "Installing latest version of neovim"
+if [[ ! -e /etc/apt/sources.list.d/neovim-ppa-ubuntu-stable-focal.list ]]; then
+  # need to add ppa
+  sudo sh -c "sudo add-apt-repository ppa:neovim-ppa/stable -y &> /dev/null"
+  # automatically performs apt update after adding
+fi
+# install if not yet installed; update if already installed
+sudo apt-get install -yqq neovim
+print_success "neovim installed"
+# TODO: redo dotfiles linking config so that this step isn't necessary
+NVIM_CONFIG="$HOME/.config/nvim/init.vim"
+if [[ ! -e "$NVIM_CONFIG" ]]; then
+  mkd "$HOME/.config/nvim"
+  touch "$NVIM_CONFIG"
+  printf "%s\n" \
+"set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source ~/.vimrc" \
+  >> "$NVIM_CONFIG"
+fi
+
+
 
 # step "Installing fonts…"
 # for font in ${NERDFONTS[@]}; do

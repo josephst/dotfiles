@@ -1,3 +1,4 @@
+# from Cătălin Mariș dotfiles (https://github.com/alrra/dotfiles)
 [alias]
 
 	a = add
@@ -301,3 +302,12 @@
 	#     by the local ones
 
 	path = ~/.gitconfig.local
+
+# some better default options
+[fetch]
+	# automatically remove branches that have been deleted from github
+	prune = true
+[branch "master"]
+  mergeoptions = --ff-only
+[branch "main"]
+  mergeoptions = --ff-only
