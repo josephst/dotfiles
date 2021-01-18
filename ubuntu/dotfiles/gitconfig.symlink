@@ -312,3 +312,5 @@
   mergeoptions = --ff-only
 [branch "main"]
   mergeoptions = --ff-only
+[credential "https://github.com"]
+	helper = !gh auth git-credential

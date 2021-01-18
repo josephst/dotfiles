@@ -58,6 +58,15 @@ source ~/.vimrc" \
   >> "$NVIM_CONFIG"
 fi
 
+step "Installing gh cli"
+if ! grep -q "^deb https://cli.github.com" /etc/apt/sources.list; then
+  # need to add ppa
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+  sudo sh -c "sudo apt-add-repository https://cli.github.com/packages"
+  # automatically performs apt update after adding
+fi
+sudo apt-get install -yqq gh
+
 # step "Installing fonts…"
 # for font in ${NERDFONTS[@]}; do
 #     if [ ! -d ~/Library/Fonts/$font ]; then
