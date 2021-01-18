@@ -19,7 +19,7 @@ copy_key_github() {
   elif [[ "$os" == ubuntu ]] && check_wsl; then
     # in WSL; Windows apps are available
     [[ -f $pub ]] && < "$pub" /mnt/c/Windows/System32/clip.exe
-    "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" "https://github.com/settings/keys"
+    wslview "https://github.com/settings/keys"
   else
     # unsure of OS
     print_warning "Unsure of OS; please enter key into Github manually."
