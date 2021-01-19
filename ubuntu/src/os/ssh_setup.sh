@@ -1,7 +1,7 @@
-script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+#!/bin/bash
 
-source "$script_dir/text_format.sh" &&
-  source "$script_dir/utils.sh"
+cd "$(dirname "${BASH_SOURCE[0]}")" \
+    && source "utils.sh"
 
 ###############################################################################
 # SSH and Github
@@ -55,3 +55,11 @@ ssh_key_setup() {
     github_key_check
   fi
 }
+
+main() {
+  chapter "Setup Github SSH keys"
+
+  ssh_key_setup
+}
+
+main

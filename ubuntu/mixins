@@ -31,8 +31,8 @@ done
 step "Symlinking dotfiles…"
 symlink_dotfiles
 
-step "Creating local config files"
-create_gitconfig_local
+# step "Creating local config files"
+# create_gitconfig_local
 
 step "Installing latest version of bat"
 install_bat

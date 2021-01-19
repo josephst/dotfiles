@@ -3,6 +3,7 @@
 # based on thoughtbot laptop script (https://github.com/thoughtbot/laptop)
 # and on minimarkham's formation script (https://github.com/minamarkham/formation/blob/master/slay)
 
+# first, clone the repo to a directory (such as ~/dotfiles)
 # usage: ./formation 2>&1 | tee ~/formation.log
 
 ###############################################################################
@@ -102,11 +103,11 @@ chapter "Installing Dependencies…"
 # -----------------------------------------------------------------------------
 # INSTALL: apt packages
 # -----------------------------------------------------------------------------
-if [ -e "$cwd/assets/apt" ]; then
+if [ -e "$cwd/package-lists/apt" ]; then
   chapter "Installing apt packages…"
 
   package_list=()
-  mapfile -t package_list < "$cwd/assets/apt"
+  mapfile -t package_list < "$cwd/package-lists/apt"
 
   install_apt_list "${package_list[@]}"
 fi
@@ -170,11 +171,12 @@ if ! [ -d "$HOME/.asdf" ]; then
 else
   print_success_muted "asdf already installed"
 fi
+source "$HOME/.asdf/asdf.sh"
+
 
 # -----------------------------------------------------------------------------
 # asdf plugins (version manager)
 # -----------------------------------------------------------------------------
-source "$HOME/.asdf/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
@@ -308,7 +310,7 @@ fi
 ###############################################################################
 # INSTALL: npm packages
 ###############################################################################
-if [ -e "$cwd/assets/npm" ]; then
+if [ -e "$cwd/package-lists/npm" ]; then
   chapter "Installing npm packages…"
 
   # first, update npm if necessary
@@ -316,7 +318,7 @@ if [ -e "$cwd/assets/npm" ]; then
     npm install -g npm --silent &> /dev/null
   fi
 
-  for pkg in $(<"$cwd/assets/npm"); do
+  for pkg in $(<"$cwd/package-lists/npm"); do
     KEY="${pkg%%::*}"
     VALUE="${pkg##*::}"
     install_npm_packages "$KEY" "$VALUE"

@@ -30,14 +30,6 @@ cli_is_installed() {
 #     fi
 # }
 
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@" --no-document
-  else
-    gem install "$@" --no-document
-  fi
-}
-
 update_apt() {
   sudo apt-get update -yqq > /dev/null
   print_success "apt sources updated"
@@ -120,47 +112,4 @@ install_update_dpkg() {
   wget -P "$temp_dir" "$1" --quiet
   sudo dpkg -i "$temp_dir/$filename"
   rm -rf "$temp_dir"
-}
-
-update_shell() {
-  local shell_path;
-  shell_path="$(command -v zsh)"
-
-  print_in_green "Changing your shell to zsh ..."
-  if ! grep "$shell_path" /etc/shells &> /dev/null ; then
-    print_in_green "Adding '$shell_path' to /etc/shells"
-    sudo sh -c "echo $shell_path >> /etc/shells"
-  fi
-  sudo chsh -s "$shell_path" "$USER"
-}
-
-alias install_asdf_plugin=add_or_update_asdf_plugin
-add_or_update_asdf_plugin() {
-  local name="$1"
-  local url="$2"
-
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
-  else
-    asdf plugin-update "$name" &> /dev/null
-  fi
-}
-
-install_asdf_language() {
-  local language="$1"
-  # install latest specified version, or the latest stable version otherwise
-  local version
-
-  if [[ -z "$2" ]]; then
-    # no version specified; go with latest available
-    version=$(asdf latest "$language")
-  else
-    # version specified, install that version
-    version=$(asdf list all "$language" "$2" | grep -v "[a-z]" | tail -1)
-  fi
-
-  if ! asdf list "$language" | grep -Fq "$version"; then
-    asdf install "$language" "$version"
-    asdf global "$language" "$version"
-  fi
 }
