@@ -16,18 +16,18 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    chapter "Update content"
+    # chapter "Update content"
 
-    if ask "Do you want to update the content from the 'dotfiles' directory?" "Y"; then
+    # if ask "Do you want to update the content from the 'dotfiles' directory?" "Y"; then
 
-        git fetch --all 1> /dev/null \
-            && git reset --hard origin/master 1> /dev/null \
-            && git checkout master &> /dev/null \
-            && git clean -fd 1> /dev/null
+    #     git fetch --all 1> /dev/null \
+    #         && git reset --hard origin/master 1> /dev/null \
+    #         && git checkout master &> /dev/null \
+    #         && git clean -fd 1> /dev/null
 
-        print_result $? "Update content"
+    #     print_result $? "Update content"
 
-    fi
+    # fi
 
 }
 
