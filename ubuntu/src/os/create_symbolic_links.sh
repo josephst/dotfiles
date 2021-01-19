@@ -87,6 +87,7 @@ _link_file() {
 }
 
 main() {
+  chapter "Symlinking Dotfiles"
   symlink_dotfiles
 }
 

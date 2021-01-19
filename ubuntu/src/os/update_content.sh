@@ -18,13 +18,11 @@ main() {
 
     chapter "Update content"
 
-    ask_for_confirmation "Do you want to update the content from the 'dotfiles' directory?"
-
-    if answer_is_yes; then
+    if ask "Do you want to update the content from the 'dotfiles' directory?" "Y"; then
 
         git fetch --all 1> /dev/null \
-            && git reset --hard origin/main 1> /dev/null \
-            && git checkout main &> /dev/null \
+            && git reset --hard origin/master 1> /dev/null \
+            && git checkout master &> /dev/null \
             && git clean -fd 1> /dev/null
 
         print_result $? "Update content"

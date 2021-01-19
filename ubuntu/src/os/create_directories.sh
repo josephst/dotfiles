@@ -9,7 +9,6 @@ create_directories() {
     "$HOME/Downloads"
   )
 
-  step "Making directories…"
   for dir in "${DIRECTORIES[@]}"; do
     mkd "$dir"
   done

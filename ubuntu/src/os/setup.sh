@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# bash "strict mode"
+set -euo pipefail
+IFS=$'\n\t'
+
 declare -r GITHUB_REPOSITORY="josephst/dotfiles"
 
 declare -r DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOSITORY.git"

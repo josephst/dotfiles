@@ -92,6 +92,7 @@ change_shell() {
     sudo sh -c "echo $shell_path >> /etc/shells"
   fi
   sudo chsh -s "$shell_path" "$USER"
+  print_success "Zsh set as default"
 }
 
 main() {

@@ -27,14 +27,14 @@ indent="    "
 
 _print_in_color() {
   printf "%b" \
-    "$(tput setaf "$2" 2> /dev/null)" \
-    "$1" \
-    "$(tput sgr0 2> /dev/null)"
+  "$(tput setaf "$2" 2> /dev/null)" \
+  "$1" \
+  "$(tput sgr0 2> /dev/null)"
 }
 
 _print_error_stream() {
   while read -r line; do
-    print_in_red "     ↳ ERROR: $line\n"
+  print_in_red "     ↳ ERROR: $line\n"
   done
 }
 
@@ -54,25 +54,25 @@ _show_spinner() {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   # Note: In order for the Travis CI site to display
-    # things correctly, it needs special treatment, hence,
-    # the "is Travis CI?" checks.
+  # things correctly, it needs special treatment, hence,
+  # the "is Travis CI?" checks.
 
-    if [ "$TRAVIS" != "true" ]; then
+  if [ "$TRAVIS" != "true" ]; then
 
-        # Provide more space so that the text hopefully
-        # doesn't reach the bottom line of the terminal window.
-        #
-        # This is a workaround for escape sequences not tracking
-        # the buffer position (accounting for scrolling).
-        #
-        # See also: https://unix.stackexchange.com/a/278888
+  # Provide more space so that the text hopefully
+  # doesn't reach the bottom line of the terminal window.
+  #
+  # This is a workaround for escape sequences not tracking
+  # the buffer position (accounting for scrolling).
+  #
+  # See also: https://unix.stackexchange.com/a/278888
 
-        printf "\n\n\n"
-        tput cuu 3
+  printf "\n\n\n"
+  tput cuu 3
 
-        tput sc
+  tput sc
 
-    fi
+  fi
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -80,29 +80,29 @@ _show_spinner() {
 
   while kill -0 "$PID" &>/dev/null; do
 
-    frameText=" [${FRAMES:i++%NUMBER_OR_FRAMES:1}] $MSG"
+  frameText=" [${FRAMES:i++%NUMBER_OR_FRAMES:1}] $MSG"
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    # Print frame text.
+  # Print frame text.
 
-    if [ "$TRAVIS" != "true" ]; then
-        printf "%s\n" "$frameText"
-      else
-        printf "%s" "$frameText"
-    fi
+  if [ "$TRAVIS" != "true" ]; then
+  printf "%s\n" "$frameText"
+  else
+  printf "%s" "$frameText"
+  fi
 
-    sleep 0.2
+  sleep 0.2
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    # Clear frame text.
+  # Clear frame text.
 
-    if [ "$TRAVIS" != "true" ]; then
-      tput rc
-    else
-      printf "\r"
-    fi
+  if [ "$TRAVIS" != "true" ]; then
+  tput rc
+  else
+  printf "\r"
+  fi
 
   done
 
@@ -138,9 +138,9 @@ print_in_white() {
 
 print_result() {
   if [ "$1" -eq 0 ]; then
-    print_success "$2"
+  print_success "$2"
   else
-    print_error "$2"
+  print_error "$2"
   fi
 
   return "$1"
@@ -217,16 +217,16 @@ label_green() {
 
 e_lemon_ated() {
   printf "
-    ${bold}Congrats! You're in formation!${normal} 🍋
+  ${bold}Congrats! You're in formation!${normal} 🍋
 
-    ╭────────────────────────────────────────────────────╮
-    │ Thanks for using Formation!                        │
-    │ If you liked it, then you should put a star on it! │
-    │                                                    │
-    │ https://github.com/minamarkham/formation           │
-    ╰────────────────────────────────────────────────────╯
+  ╭────────────────────────────────────────────────────╮
+  │ Thanks for using Formation!                        │
+  │ If you liked it, then you should put a star on it! │
+  │                                                    │
+  │ https://github.com/minamarkham/formation           │
+  ╰────────────────────────────────────────────────────╯
 
-    "
+  "
 }
 
 ###############################################################################
@@ -238,8 +238,8 @@ _kill_all_subprocesses() {
   local i=""
 
   for i in $(jobs -p); do
-    kill "$i"
-    wait "$i" &> /dev/null
+  kill "$i"
+  wait "$i" &> /dev/null
   done
 
 }
@@ -247,7 +247,7 @@ _kill_all_subprocesses() {
 _set_trap() {
 
   trap -p "$1" | grep "$2" &> /dev/null \
-    || trap '$2' "$1"
+  || trap '$2' "$1"
 
 }
 
@@ -256,17 +256,17 @@ append_to_zshrc() {
   local skip_new_line="${2:-0}"
 
   if [ -w "$HOME/.zshrc.local" ]; then
-    zshrc="$HOME/.zshrc.local"
+  zshrc="$HOME/.zshrc.local"
   else
-    zshrc="$HOME/.zshrc"
+  zshrc="$HOME/.zshrc"
   fi
 
   if ! grep -Fqs "$text" "$zshrc"; then
-    if [ "$skip_new_line" -eq 1 ]; then
-      printf "%s\\n" "$text" >> "$zshrc"
-    else
-      printf "\\n%s\\n" "$text" >> "$zshrc"
-    fi
+  if [ "$skip_new_line" -eq 1 ]; then
+  printf "%s\\n" "$text" >> "$zshrc"
+  else
+  printf "\\n%s\\n" "$text" >> "$zshrc"
+  fi
   fi
 }
 
@@ -276,8 +276,8 @@ append_to_zshrc() {
 
 check_bash_version() {
   if ((BASH_VERSINFO[0] < 3)); then
-    print_error "Sorry, you need at least bash-3.0 to run this script."
-    exit 1
+  print_error "Sorry, you need at least bash-3.0 to run this script."
+  exit 1
   fi
 }
 
@@ -286,9 +286,9 @@ check_wsl() {
   os="$(get_os)"
 
   if [[ "$os" == "ubuntu" ]] && [[ "$(cat /proc/sys/kernel/osrelease)" == *microsoft* ]]; then
-    return 0 # true (is WSL)
+  return 0 # true (is WSL)
   else
-    return 1 # false (not WSL)
+  return 1 # false (not WSL)
   fi
 }
 
@@ -301,11 +301,11 @@ get_os() {
   kernelName="$(uname -s)"
 
   if [[ "$kernelName" == "Darwin" ]]; then
-    os="macOS"
+  os="macOS"
   elif [[ "$kernelName" == "Linux" ]] && [[ -e "/etc/lsb-release" ]]; then
-    os="ubuntu"
+  os="ubuntu"
   else
-    os="$kernelName"
+  os="$kernelName"
   fi
 
   printf "%s" "$os"
@@ -322,12 +322,43 @@ get_os_version() {
   os="$(get_os)"
 
   if [ "$os" == "macOS" ]; then
-    version="$(sw_vers -productVersion)"
+  version="$(sw_vers -productVersion)"
   elif [ "$os" == "ubuntu" ]; then
-    version="$(lsb_release -d | cut -f2 | cut -d' ' -f2)"
+  version="$(lsb_release -d | cut -f2 | cut -d' ' -f2)"
   fi
 
   printf "%s" "$version"
+
+}
+
+is_supported_version() {
+
+  # shellcheck disable=SC2206
+  declare -a v1=(${1//./ })
+  # shellcheck disable=SC2206
+  declare -a v2=(${2//./ })
+  local i=""
+
+  # Fill empty positions in v1 with zeros.
+  for (( i=${#v1[@]}; i<${#v2[@]}; i++ )); do
+  v1[i]=0
+  done
+
+
+  for (( i=0; i<${#v1[@]}; i++ )); do
+
+  # Fill empty positions in v2 with zeros.
+  if [[ -z ${v2[i]} ]]; then
+    v2[i]=0
+  fi
+
+  if (( 10#${v1[i]} < 10#${v2[i]} )); then
+    return 1
+  elif (( 10#${v1[i]} > 10#${v2[i]} )); then
+    return 0
+  fi
+
+  done
 
 }
 
@@ -337,10 +368,10 @@ get_installed_package_version() {
 
 check_internet_connection() {
   if [[ $(ping -q -w 1 -c 1 google.com &> /dev/null) ]]; then
-    print_error "Please check your internet connection";
+  print_error "Please check your internet connection";
   exit 0
   else
-    print_success "Internet connection";
+  print_success "Internet connection";
   fi
 }
 
@@ -399,7 +430,7 @@ execute() {
   print_result $exitCode "$MSG"
 
   if [ $exitCode -ne 0 ]; then
-    _print_error_stream < "$TMP_FILE"
+  _print_error_stream < "$TMP_FILE"
   fi
 
   rm -rf "$TMP_FILE"
@@ -412,16 +443,20 @@ execute() {
 
 mkd() {
   if [ -n "$1" ]; then
-    if [ -e "$1" ]; then
-      if [ ! -d "$1" ]; then
-        print_error "$1 - a file with the same name already exists!"
-      else
-        print_success_muted "$1 already exists. Skipped."
-      fi
-    else
-      execute "mkdir -p $1" "$1"
-    fi
+  if [ -e "$1" ]; then
+  if [ ! -d "$1" ]; then
+  print_error "$1 - a file with the same name already exists!"
+  else
+  print_success_muted "$1 already exists. Skipped."
   fi
+  else
+  execute "mkdir -p $1" "$1"
+  fi
+  fi
+}
+
+cmd_exists() {
+    command -v "$1" &> /dev/null
 }
 
 ###############################################################################
@@ -433,19 +468,19 @@ install_bat() {
   # remove 'v' from filename (ex v0.17.1 => 0.17.1)
   BAT_FILENAME=bat_${BAT_VERSION#v}_amd64.deb
   if [[ -x $(command -v bat) ]] || [[ -x $(command -v batcat) ]] ; then
-    # bat is installed; check for updates
-    INSTALLED_BAT_VERSION=$(get_installed_package_version bat)
-    if dpkg --compare-versions "$INSTALLED_BAT_VERSION" "lt" "${BAT_VERSION#v}"; then
-      # update bat
-      install_update_dpkg "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/$BAT_FILENAME"
-      print_in_green "    ✓ bat $BAT_VERSION installed\n"
-    else
-      print_success_muted "bat already installed and up to date. Skipping"
-    fi
+  # bat is installed; check for updates
+  INSTALLED_BAT_VERSION=$(get_installed_package_version bat)
+  if dpkg --compare-versions "$INSTALLED_BAT_VERSION" "lt" "${BAT_VERSION#v}"; then
+  # update bat
+  install_update_dpkg "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/$BAT_FILENAME"
+  print_in_green "    ✓ bat $BAT_VERSION installed\n"
   else
-    # bat not yet installed
-    install_update_dpkg "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/$BAT_FILENAME"
-    print_in_green "    ✓ bat $BAT_VERSION installed\n"
+  print_success_muted "bat already installed and up to date. Skipping"
+  fi
+  else
+  # bat not yet installed
+  install_update_dpkg "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/$BAT_FILENAME"
+  print_in_green "    ✓ bat $BAT_VERSION installed\n"
   fi
 }
 
@@ -472,7 +507,7 @@ ask_for_sudo() {
 
   # Keep-alive: update existing `sudo` time stamp until script has finished
   while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-    print_success "Password cached"
+  print_success "Password cached"
 
 }
 
@@ -482,34 +517,48 @@ ask() {
   local prompt default reply
 
   if [ "${2:-}" = "Y" ]; then
-    prompt="Y/n"
-    default=Y
+  prompt="Y/n"
+  default=Y
   elif [ "${2:-}" = "N" ]; then
-    prompt="y/N"
-    default=N
+  prompt="y/N"
+  default=N
   else
-    prompt="y/n"
-    default=
+  prompt="y/n"
+  default=
   fi
 
   while true; do
 
-    # Ask the question (not using "read -p" as it uses stderr not stdout)
-    echo -n "  [?] $1 [$prompt] "
+  # Ask the question (not using "read -p" as it uses stderr not stdout)
+  echo -n "  [?] $1 [$prompt] "
 
-    # Read the answer (use /dev/tty in case stdin is redirected from somewhere else)
-    read -r reply </dev/tty
+  # Read the answer (use /dev/tty in case stdin is redirected from somewhere else)
+  read -r reply </dev/tty
 
-    # Default?
-    if [ -z "$reply" ]; then
-      reply=$default
-    fi
+  # Default?
+  if [ -z "$reply" ]; then
+  reply=$default
+  fi
 
-    # Check if the reply is valid
-    case "$reply" in
-        Y*|y*) return 0 ;;
-        N*|n*) return 1 ;;
-    esac
+  # Check if the reply is valid
+  case "$reply" in
+  Y*|y*) return 0 ;;
+  N*|n*) return 1 ;;
+  esac
 
   done
+}
+
+skip_questions() {
+
+   while :; do
+    case $1 in
+      -y|--yes) return 0;;
+           *) break;;
+    esac
+    shift 1
+  done
+
+  return 1
+
 }

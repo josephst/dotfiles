@@ -34,14 +34,15 @@ create_gitconfig_local() {
 
 create_bash_local() {
 
-    declare -r FILE_PATH="$HOME/.bash.local"
+  declare -r FILE_PATH="$HOME/.bash.local"
+  local created_file="false"
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-   if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
-        DOTFILES_BIN_DIR="$(dirname "$(pwd)")/bin/"
+  if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
+    DOTFILES_BIN_DIR="$(dirname "$(pwd)")/bin/"
 
-        printf "%s\n" \
+    printf "%s\n" \
 "#!/bin/bash
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Set PATH additions.
@@ -49,10 +50,15 @@ create_bash_local() {
 # export PATH
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 " \
-        >> "$FILE_PATH"
+    >> "$FILE_PATH"
+    created_file="true"
    fi
-
+   if [[ $created_file == "true" ]]; then
     print_result $? "$FILE_PATH"
+  else
+    print_success_muted "$FILE_PATH already exists. Skipping"
+  fi
+
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
