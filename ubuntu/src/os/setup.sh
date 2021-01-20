@@ -222,6 +222,12 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    # Check our bash version before continuing
+
+    check_bash_version
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     # Check internet connection
 
     check_internet_connection
