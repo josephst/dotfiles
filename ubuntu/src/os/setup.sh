@@ -222,6 +222,12 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    # Check internet connection
+
+    check_internet_connection
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     skip_questions "$@" \
         && skipQuestions=true
 
