@@ -4,8 +4,6 @@
 # VARIABLES
 ###############################################################################
 
-count=1
-
 # TODO: convert escape sequences to tput color code lookups (see _print_in_color() )
 reset="\033[0m"
 highlight="\033[41m\033[97m"
@@ -180,7 +178,7 @@ title() {
 
 chapter() {
   local fmt="$1"; shift
-  printf "\n✦  ${bold}$((count++)). $fmt${normal}\n└─────────────────────────────────────────────────────○\n" "$@"
+  printf "\n✦${indent}$fmt${normal}\n└─────────────────────────────────────────────────────○\n" "$@"
 }
 
 echo_install() {
@@ -332,7 +330,7 @@ get_os_version() {
 }
 
 is_supported_version() {
-
+  IFS=$' \n\t' # allow " " to separate fields (i.e. 10 04 => [10, 4])
   # shellcheck disable=SC2206
   declare -a v1=(${1//./ })
   # shellcheck disable=SC2206
@@ -341,7 +339,7 @@ is_supported_version() {
 
   # Fill empty positions in v1 with zeros.
   for (( i=${#v1[@]}; i<${#v2[@]}; i++ )); do
-  v1[i]=0
+    v1[i]=0
   done
 
 
@@ -359,7 +357,7 @@ is_supported_version() {
   fi
 
   done
-
+  IFS=$'\n\t' # back to the "strict" field separator
 }
 
 get_installed_package_version() {
@@ -531,7 +529,7 @@ ask() {
 skip_questions() {
 
    while :; do
-    case $1 in
+    case ${1:-""} in
       -y|--yes) return 0;;
            *) break;;
     esac
