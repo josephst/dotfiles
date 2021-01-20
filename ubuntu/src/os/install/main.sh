@@ -20,3 +20,9 @@ upgrade
 
 # ruby packages
 ./install_ruby_packages.sh
+
+# rust
+./install_rust.sh
+
+# bat
+./install_bat.sh

@@ -104,12 +104,3 @@ install_npm_packages() {
   fi
 }
 
-# install a package from a url
-install_update_dpkg() {
-  local temp_dir
-  temp_dir=$(mktemp -d --tmpdir) || exit 1
-  local filename=${1##*/}
-  wget -P "$temp_dir" "$1" --quiet
-  sudo dpkg -i "$temp_dir/$filename"
-  rm -rf "$temp_dir"
-}

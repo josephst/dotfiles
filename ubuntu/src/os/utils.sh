@@ -463,27 +463,6 @@ cmd_exists() {
 # Misc user-created functions
 ###############################################################################
 
-install_bat() {
-  BAT_VERSION=$(get_github_version_latest sharkdp/bat)
-  # remove 'v' from filename (ex v0.17.1 => 0.17.1)
-  BAT_FILENAME=bat_${BAT_VERSION#v}_amd64.deb
-  if [[ -x $(command -v bat) ]] || [[ -x $(command -v batcat) ]] ; then
-  # bat is installed; check for updates
-  INSTALLED_BAT_VERSION=$(get_installed_package_version bat)
-  if dpkg --compare-versions "$INSTALLED_BAT_VERSION" "lt" "${BAT_VERSION#v}"; then
-  # update bat
-  install_update_dpkg "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/$BAT_FILENAME"
-  print_in_green "    ✓ bat $BAT_VERSION installed\n"
-  else
-  print_success_muted "bat already installed and up to date. Skipping"
-  fi
-  else
-  # bat not yet installed
-  install_update_dpkg "https://github.com/sharkdp/bat/releases/download/$BAT_VERSION/$BAT_FILENAME"
-  print_in_green "    ✓ bat $BAT_VERSION installed\n"
-  fi
-}
-
 # The releases are returned in the format
 # {"id":3622206,"tag_name":"hello-1.0.0.11",…}
 # we have to extract the tag_name.
