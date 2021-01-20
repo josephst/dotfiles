@@ -4,14 +4,10 @@
 # VARIABLES
 ###############################################################################
 
-# TODO: convert escape sequences to tput color code lookups (see _print_in_color() )
-reset="\033[0m"
-highlight="\033[41m\033[97m"
-dot="\033[31m▸ $reset"
-dim="\033[2m"
-blue="\e[34m"
-green="\e[32m"
-yellow="\e[33m"
+reset="\e[0m"
+highlight="\e[41m\e[97m"
+dot="\e[31m▸ $reset"
+dim="\e[2m"
 tag_green="\e[30;42m"
 tag_blue="\e[30;46m"
 bold=$(tput bold)
@@ -206,11 +202,13 @@ step() {
 }
 
 label_blue() {
-  printf "\e[30;46m $1 \033[0m\e[34m $2 \033[0m\n"
+  # printf "$tag_blue $1 $reset\e[34m $2 $reset\n"
+  printf "$tag_blue $1 $reset\n"
 }
 
 label_green() {
-  printf "\e[30;42m $1 \e[0m\e[32m $2 \033[0m\n"
+  # printf "$tag_green $1 $reset\e[32m $2 $reset\n"
+  printf "$tag_green $1 $reset\n"
 }
 
 e_lemon_ated() {
