@@ -38,6 +38,13 @@ install_package "HTTPie" "httpie"
 # jq
 install_package "jq" "jq"
 
+# GitHub CLI
+if ! cmd_exists gh; then
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 &> /dev/null
+  add_ppa https://cli.github.com/packages
+fi
+install_package "GitHub CLI (gh)" "gh"
+
 # Library files (for building Ruby)
 install_package "Ruby library files" "autoconf bison libffi-dev libgdbm-dev libgdbm6 libncurses5-dev libreadline-dev libsqlite3-dev libssl-dev libyaml-dev zlib1g-dev"
 
