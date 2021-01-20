@@ -41,7 +41,7 @@ install_package "jq" "jq"
 # GitHub CLI
 if ! cmd_exists gh; then
   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 &> /dev/null
-  add_ppa https://cli.github.com/packages
+  sudo apt-add-repository -y https://cli.github.com/packages &> /dev/null
 fi
 install_package "GitHub CLI (gh)" "gh"
 
