@@ -292,6 +292,7 @@ main() {
         ./restart.sh
     fi
 
+    title "Done! ✨"
 }
 
 main "$@"
