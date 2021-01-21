@@ -167,7 +167,9 @@ choco install hackfont -y
 # choco install vscode  -y
 # don't use choco for vscode (better to do local user install)
 choco install git --params "/GitOnlyOnPath /NoAutoCrlf /WindowsTerminal /NoShellIntegration"  -y 
-choco install poshgit  -y 
+# choco install poshgit  -y 
+PowerShellGet\Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
+PowerShellGet\Install-Module oh-my-posh -Scope CurrentUser
 choco install Git-Credential-Manager-for-Windows  -y
 choco install gh -y
 choco install python  -y 
