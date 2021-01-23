@@ -233,6 +233,16 @@ if (-not (Test-Path -Path $HOME\dotfiles)) {
     Write-Host "dotfiles already exists"
 }
 
+# add USER_DIR/bin to path
+$binDir = "$env:USERPROFILE\bin"
+if ((Test-Path $binDir) -eq $False) {
+    # bin folder does not exist; create it
+    New-Item -Type Directory -Path $binDir
+}
+$oldpath = (Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH).path
+$newPath = "$oldPath;$binDir"
+Set-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Environment' -Name PATH -Value $newPath
+
 
 # Restore Temporary Settings
 Enable-UAC
