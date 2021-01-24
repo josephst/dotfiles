@@ -62,6 +62,9 @@ install_omz() {
       && return 0" "oh-my-zsh install script"
     # 
   fi
+
+  # make sure all omz submodules (ie zsh-syntax-highlighting) are setup
+  execute "$(git submodule update --init)" "git submodules for omz"
 }
 
 install_starship() {
