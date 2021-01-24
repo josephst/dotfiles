@@ -58,7 +58,7 @@ install_omz() {
     download "$OMZ_INSTALLER" "$tmpFile"
 
     # delete zshrc so that there's not a file conflict when symlinking later
-    execute "sh -c $tmpFile --unattended \
+    execute "sh $tmpFile --unattended \
       && rm ~/.zshrc \
       && rm -rf $tmpFile \
       && return 0" "oh-my-zsh install script"
