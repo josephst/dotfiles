@@ -6,7 +6,7 @@ IFS=$'\n\t'
 
 declare -r GITHUB_REPOSITORY="josephst/dotfiles"
 
-declare -r DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOSITORY.git"
+declare -r DOTFILES_ORIGIN="https://github.com/josephst/dotfiles.git"
 declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/main"
 declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/ubuntu/src/os/utils.sh"
 
@@ -272,19 +272,19 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    if cmd_exists "git"; then
+    # if cmd_exists "git"; then
 
-        if [ "$(git config --get remote.origin.url)" != "$DOTFILES_ORIGIN" ]; then
-            ./initialize_git_repository.sh "$DOTFILES_ORIGIN"
-        fi
+    #     if [ "$(git config --get remote.origin.url)" != "$DOTFILES_ORIGIN" ]; then
+    #         ./initialize_git_repository.sh "$DOTFILES_ORIGIN"
+    #     fi
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        if ! $skipQuestions; then
-            ./update_content.sh
-        fi
+    #     if ! $skipQuestions; then
+    #         ./update_content.sh
+    #     fi
 
-    fi
+    # fi
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

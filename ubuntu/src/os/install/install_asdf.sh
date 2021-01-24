@@ -32,8 +32,8 @@ install_asdf() {
   execute "git clone --quiet $ASDF_REPO_URL $ASDF_DIRECTORY \
   && pushd $ASDF_DIRECTORY \
   && git checkout \$(git describe --abbrev=0 --tags) \
-  && popd" "install asdf" \
-  && add_bash_config
+  && popd" "install asdf"
+  add_bash_config
 }
 
 update_asdf() {
@@ -105,4 +105,4 @@ main() {
   install_latest_stable_ruby
 }
 
-# main
+main
