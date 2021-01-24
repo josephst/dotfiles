@@ -74,7 +74,7 @@ _show_spinner() {
 
   while kill -0 "$PID" &>/dev/null; do
 
-  frameText=" [${FRAMES:i++%NUMBER_OR_FRAMES:1}] $MSG"
+  frameText="  [${FRAMES:i++%NUMBER_OR_FRAMES:1}] $MSG"
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
