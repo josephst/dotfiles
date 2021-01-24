@@ -46,8 +46,8 @@ add_or_update_asdf_plugin() {
   local name="$1"
   local url="$2"
 
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
+  if ! asdf plugin-list &> /dev/null | grep -Fq "$name"; then
+    asdf plugin-add "$name" "$url" &> /dev/null
   else
     asdf plugin-update "$name" &> /dev/null
   fi
