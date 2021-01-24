@@ -2,8 +2,7 @@
 
 cd "$(dirname "${BASH_SOURCE[0]}")" && \
   source "./utils.sh"
-
-declare -r DOTFILES_ROOT="../../dotfiles"
+declare -r DOTFILES_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../../dotfiles" &>/dev/null && pwd -P)
 
 symlink_dotfiles() {
   local overwrite_all=false backup_all=false skip_all=false
