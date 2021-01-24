@@ -14,6 +14,7 @@ gem_install_or_update() {
 
 main() {
   step "Ruby gems"
+  source "$HOME/.bash.local"
   gem_install_or_update rails
 }
 
