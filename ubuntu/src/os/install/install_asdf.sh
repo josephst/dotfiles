@@ -20,9 +20,9 @@ export ASDF_DIR=\"$ASDF_DIRECTORY\"
     && . \"\$ASDF_DIR/completions/asdf.bash\"
 "
   execute \
-    "printf '%s' '$CONFIGS' >> $LOCAL_BASH_CONFIG_FILE \
-    && source $LOCAL_BASH_CONFIG_FILE" \
+    "printf '%s' '$CONFIGS' >> $LOCAL_BASH_CONFIG_FILE" \
     "asdf (update $LOCAL_BASH_CONFIG_FILE)"
+  source "$ASDF_DIRECTORY/asdf.sh"
 }
 
 
