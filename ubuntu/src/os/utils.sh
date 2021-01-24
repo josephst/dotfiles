@@ -329,6 +329,8 @@ get_os_version() {
 
 is_supported_version() {
   IFS=$' \n\t' # allow " " to separate fields (i.e. 10 04 => [10, 4])
+  set +u # turn off unbound variable checking
+
   # shellcheck disable=SC2206
   declare -a v1=(${1//./ })
   # shellcheck disable=SC2206
@@ -343,19 +345,21 @@ is_supported_version() {
 
   for (( i=0; i<${#v1[@]}; i++ )); do
 
-  # Fill empty positions in v2 with zeros.
-  if [[ -z ${v2[i]} ]]; then
-    v2[i]=0
-  fi
+    # Fill empty positions in v2 with zeros.
+    if [[ -z ${v2[i]} ]]; then
+      v2[i]=0
+    fi
 
-  if (( 10#${v1[i]} < 10#${v2[i]} )); then
-    return 1
-  elif (( 10#${v1[i]} > 10#${v2[i]} )); then
-    return 0
-  fi
-
+    if (( 10#${v1[i]} < 10#${v2[i]} )); then
+      IFS=$'\n\t' # back to the "strict" field separator
+      set -u
+      return 1
+    elif (( 10#${v1[i]} > 10#${v2[i]} )); then
+      IFS=$'\n\t' # back to the "strict" field separator
+      set -u
+      return 0
+    fi
   done
-  IFS=$'\n\t' # back to the "strict" field separator
 }
 
 get_installed_package_version() {
