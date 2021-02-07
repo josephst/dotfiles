@@ -3,6 +3,7 @@
 # based on thoughtbot laptop script (https://github.com/thoughtbot/laptop)
 # and on minimarkham's formation script (https://github.com/minamarkham/formation/blob/master/slay)
 
+# first, clone the repo to a directory (such as ~/dotfiles)
 # usage: ./formation 2>&1 | tee ~/formation.log
 
 ###############################################################################
@@ -19,7 +20,7 @@ trap 'ret=$?; test $ret -ne 0 && printf "\n   \e[31m\033[0m  Formation failed
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 if [ -e "$script_dir/twirl" ]; then
   # shellcheck source=ubuntu/twirl
-  cd "$(dirname "${BASH_SOURCE[0]}")" && . "twirl"
+  cd "$script_dir" && . "twirl"
 else
   printf "\n ⚠️  ./twirl not found  💃🏾 First, you need to twirl on your haters\n"
   exit 1
@@ -102,11 +103,11 @@ chapter "Installing Dependencies…"
 # -----------------------------------------------------------------------------
 # INSTALL: apt packages
 # -----------------------------------------------------------------------------
-if [ -e "$cwd/assets/apt" ]; then
+if [ -e "$cwd/package-lists/apt" ]; then
   chapter "Installing apt packages…"
 
   package_list=()
-  mapfile -t package_list < "$cwd/assets/apt"
+  mapfile -t package_list < "$cwd/package-lists/apt"
 
   install_apt_list "${package_list[@]}"
 fi
@@ -170,11 +171,12 @@ if ! [ -d "$HOME/.asdf" ]; then
 else
   print_success_muted "asdf already installed"
 fi
+source "$HOME/.asdf/asdf.sh"
+
 
 # -----------------------------------------------------------------------------
 # asdf plugins (version manager)
 # -----------------------------------------------------------------------------
-source "$HOME/.asdf/asdf.sh"
 add_or_update_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
 add_or_update_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 
@@ -308,15 +310,15 @@ fi
 ###############################################################################
 # INSTALL: npm packages
 ###############################################################################
-if [ -e "$cwd/assets/npm" ]; then
+if [ -e "$cwd/package-lists/npm" ]; then
   chapter "Installing npm packages…"
 
   # first, update npm if necessary
-  if [[ $(npm outdated -g npm > /dev/null ) -ne 0 ]]; then
-    npm install -g npm --silent
+  if [[ $(npm outdated -g npm &> /dev/null ) -ne 0 ]]; then
+    npm install -g npm --silent &> /dev/null
   fi
 
-  for pkg in $(<"$cwd/assets/npm"); do
+  for pkg in $(<"$cwd/package-lists/npm"); do
     KEY="${pkg%%::*}"
     VALUE="${pkg##*::}"
     install_npm_packages "$KEY" "$VALUE"
@@ -330,7 +332,7 @@ fi
 chapter "Adding mixins…"
 if [ -f "$cwd/mixins" ]; then
   if ask "Do you want to add mixins?" Y; then
-    . "$cwd/mixins"; announce "Mixins added. 🔥 ${bold}Swag.${normal}";
+    . "$cwd/mixins"; step "Mixins added. 🔥 ${bold}Swag.${normal}";
   else
     print_success_muted "Mixins declined.";
   fi
@@ -338,9 +340,7 @@ else
   print_warning "No $cwd/.mixins found. Skipping."
 fi
 
-printf "\n"
-
 ###############################################################################
 # 🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋🍋
 ###############################################################################
-e_lemon_ated
+# e_lemon_ated

@@ -137,6 +137,7 @@
 	# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	r = rebase
+	ri = "!sh -c 't=\"${1:-master}\"; s=\"${2:-HEAD}\"; mb=\"$(git merge-base \"$t\" \"$s\")\"; if test \"x$mb\" = x ; then o=\"$t\"; else lm=\"$(git log -n1 --merges \"$t..$s\" --pretty=%H)\"; if test \"x$lm\" = x ; then o=\"$mb\"; else o=\"$lm\"; fi; fi; test $# -gt 0 && shift; test $# -gt 0 && shift; git rebase --interactive \"$o\" \"$@\"'"
 
 	# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -230,7 +231,7 @@
 	abbrev = 12
 	attributesFile = ~/.gitattributes
 	autocrlf = input
-	editor = vim
+	editor = code --wait
 	excludesFile = ~/.gitignore
 
 [diff]
@@ -311,3 +312,5 @@
   mergeoptions = --ff-only
 [branch "main"]
   mergeoptions = --ff-only
+[credential "https://github.com"]
+	helper = !gh auth git-credential

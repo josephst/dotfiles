@@ -112,26 +112,17 @@ export VISUAL="$VISUAL"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias cat="bat --paging=never"
 export BAT_THEME="TwoDark"
 
-# Safe ops. Ask the user before doing anything destructive.
-
-# rm -I: prompt once before removing more than three files, or
-# when removing recursively; less intrusive than -i,
-# while still giving protection against most mistakes
-alias rmi="${aliases[rm]:-rm} -I"
-
-alias mvi="${aliases[mv]:-mv} -i"
-alias cpi="${aliases[cp]:-cp} -i"
-alias lni="${aliases[ln]:-ln} -i"
-alias rm="${aliases[rm]:-rm} -I"
-alias mv="${aliases[mv]:-mv} -i"
-alias cp="${aliases[cp]:-cp} -i"
-alias ln="${aliases[ln]:-ln} -i"
+if [ -f ~/.bash_aliases ]; then
+  source ~/.bash_aliases
+fi
 
 # Zsh syntax highlighting (https://github.com/zsh-users/zsh-syntax-highlighting/)
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 typeset -A ZSH_HIGHLIGHT_PATTERNS
 # To have commands starting with `rm -rf` in red:
 ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
+
+# Rust
+source $HOME/.cargo/env
