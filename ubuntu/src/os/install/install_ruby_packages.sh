@@ -16,6 +16,7 @@ main() {
   step "Ruby gems"
   source "$HOME/.bash.local"
   gem_install_or_update rails
+  gem_install_or_update rubocop
 }
 
 main
