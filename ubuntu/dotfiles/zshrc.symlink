@@ -113,6 +113,7 @@ export VISUAL="$VISUAL"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export BAT_THEME="TwoDark"
+alias cat="bat --paging=never"
 
 if [ -f ~/.bash_aliases ]; then
   source ~/.bash_aliases
