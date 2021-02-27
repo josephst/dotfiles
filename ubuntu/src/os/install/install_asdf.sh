@@ -80,7 +80,7 @@ install_latest_stable_node() {
 
 install_latest_stable_ruby() {
   execute "source $ASDF_DIRECTORY/asdf.sh \
-    && install_asdf_language \"ruby\" \"2.7\"" "asdf install (ruby)"
+    && install_asdf_language \"ruby\" \"3.0\"" "asdf install (ruby)"
 }
 
 
