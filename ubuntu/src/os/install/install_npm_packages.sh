@@ -12,7 +12,7 @@ install_npm_package() {
 
 main() {
   step "npm packages"
-  install_npm_package "npm (update)" "npm"
+  install_npm_package "npm (update)" "npm@latest"
   install_npm_package "ncu" "npm-check-updates"
   install_npm_package "prettier" "prettier"
   install_npm_package "serve" "serve"
