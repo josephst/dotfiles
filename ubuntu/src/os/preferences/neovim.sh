@@ -3,7 +3,7 @@
 cd "$(dirname "${BASH_SOURCE[0]}")" \
     && . "../utils.sh"
 
-NVIM_CONFIG="$HOME/.config/nvim/init2.vim"
+NVIM_CONFIG="$HOME/.config/nvim/init.vim"
 NVIM_CONFIG_DIR=$(dirname "$NVIM_CONFIG")
 
 # TODO: try to find a way to make this part of the dotfiles linking
