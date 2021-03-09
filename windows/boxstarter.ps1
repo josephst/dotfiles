@@ -205,6 +205,7 @@ choco install imagemagick -y
 choco install 7zip.install -y
 choco install sysinternals -y
 choco install neovim -y
+choco install ripgrep -y
 
 # windows features
 # choco install -y Microsoft-Hyper-V-All -source windowsFeatures
