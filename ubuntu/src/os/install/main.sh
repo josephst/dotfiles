@@ -29,3 +29,6 @@ upgrade
 
 # ripgrep
 ./install_ripgrep.sh
+
+# fd
+./install_fd.sh
