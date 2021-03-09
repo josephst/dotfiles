@@ -26,3 +26,6 @@ upgrade
 
 # bat
 ./install_bat.sh
+
+# ripgrep
+./install_ripgrep.sh

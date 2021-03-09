@@ -73,3 +73,15 @@ upgrade() {
         "APT (upgrade)"
 
 }
+
+# install a package from a url
+download_install_dpkg() {
+  # $1 = URL; $2 = human-readable description
+  local tmpFile=""
+  tmpFile="$(mktemp /tmp/XXXXX)"
+
+  execute "curl -sL $1 -o $tmpFile \
+    && sudo dpkg -i $tmpFile \
+    && rm -rf $tmpFile \
+    && return 0" "$2"
+}

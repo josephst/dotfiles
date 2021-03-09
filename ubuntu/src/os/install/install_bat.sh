@@ -4,18 +4,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
   && source "../utils.sh" \
   && source "utils.sh"
 
-  # install a package from a url
-download_install_dpkg() {
-  # $1 = URL; $2 = human-readable description
-  local tmpFile=""
-  tmpFile="$(mktemp /tmp/XXXXX)"
-
-  execute "curl -sL $1 -o $tmpFile \
-    && sudo dpkg -i $tmpFile \
-    && rm -rf $tmpFile \
-    && return 0" "$2"
-}
-
 install_bat() {
   declare bat_version=""
   bat_version=$(get_github_version_latest sharkdp/bat)
