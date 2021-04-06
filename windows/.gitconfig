@@ -13,6 +13,7 @@
 
 [core]
   autocrlf = input
+  excludesfile = "$HOME\\.gitignore_global"
 
 [alias]
   # one-line log

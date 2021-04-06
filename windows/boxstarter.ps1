@@ -232,6 +232,7 @@ Set-WindowsExplorerOptions -EnableShowFileExtensions
 if (-not (Test-Path -Path $HOME\dotfiles)) {
     git clone https://github.com/josephst/dotfiles.git $HOME\dotfiles
     New-Item -ItemType SymbolicLink -Target "$HOME\dotfiles\windows\.gitconfig" -Path "$HOME\.gitconfig" -Force
+    New-Item -ItemType SymbolicLink -Target "$HOME\dotfiles\windows\.gitignore_global" -Path "$HOME\.gitignore_global" -Force
 } else {
     Write-Host "dotfiles already exists"
 }
