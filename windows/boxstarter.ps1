@@ -182,8 +182,8 @@ py -3 -m pip install --user pipenv
 # web dev
 choco install nodejs-lts -y
 # choco install yarn -y
-choco install visualstudio2017buildtools  -y
-choco install visualstudio2017-workload-vctools  -y 
+choco install visualstudio2019buildtools  -y
+choco install visualstudio2019-workload-vctools  -y 
 # remember to run `yarn global add windows-build-tools` AS ADMIN after this scrip finishes
 # choco install python2 -y # Node.js requires Python 2 to build native modules
 choco install hugo -y
