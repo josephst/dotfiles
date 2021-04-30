@@ -12,7 +12,7 @@
   pager = true
 
 [core]
-  autocrlf = input
+  autocrlf = true
   excludesfile = "$HOME\\.gitignore_global"
 
 [alias]
